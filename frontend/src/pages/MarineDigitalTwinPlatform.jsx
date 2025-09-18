@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import * as d3 from 'd3';
 import Navbar from '../components/Navbar';
+import VarunAIAgent from '../components/VarunAiAgent';
 
 
 
@@ -14,6 +15,7 @@ export default function MarineDigitalTwin() {
     const [selectedLayer, setSelectedLayer] = useState('Temperature');
     const [timeRange, setTimeRange] = useState('24h');
     const [isStreaming, setIsStreaming] = useState(true);
+    const [isVarunOpen, setIsVarunOpen] = useState(false);
     const [currentConditions, setCurrentConditions] = useState({
         temperature: 26.3,
         waveHeight: 1.2,
@@ -352,6 +354,11 @@ export default function MarineDigitalTwin() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
             <Navbar />
+            <VarunAIAgent 
+    isOpen={isVarunOpen} 
+    onToggle={() => setIsVarunOpen(!isVarunOpen)}
+    currentPage="digital_twin" // or "oceanography", "edna", "digital_twin", etc.
+/>
             
             <div className="pt-24 px-4">
                 <div className="max-w-7xl mx-auto">

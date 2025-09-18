@@ -6,6 +6,7 @@ import {
     FileDown, FileText, Settings, Eye, Edit, Trash2, Plus
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import VarunAIAgent from '../components/VarunAiAgent';
 
 // Enhanced Navbar Component
 
@@ -13,6 +14,7 @@ import Navbar from '../components/Navbar';
 
 export default function DataPortal() {
     const [selectedDataSource, setSelectedDataSource] = useState('Oceanographic Data');
+    const [isVarunOpen, setIsVarunOpen] = useState(false);
     const [timeRange, setTimeRange] = useState('Last 7 Days');
     const [qualityFilter, setQualityFilter] = useState('All Data');
     const [selectedRows, setSelectedRows] = useState([]);
@@ -181,6 +183,11 @@ export default function DataPortal() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
             <Navbar />
+            <VarunAIAgent 
+    isOpen={isVarunOpen} 
+    onToggle={() => setIsVarunOpen(!isVarunOpen)}
+    currentPage="general" // or "oceanography", "edna", "digital_twin", etc.
+/>
             
             <div className="pt-24 px-4">
                 <div className="max-w-7xl mx-auto">
@@ -188,9 +195,7 @@ export default function DataPortal() {
                         {/* Enhanced Sidebar */}
                         <div className="w-64 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 h-fit">
                             <div className="flex items-center gap-3 mb-8">
-                                <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center">
-                                    <span className="text-white font-bold text-sm">TD</span>
-                                </div>
+                                
                                 <div>
                                     <div className="text-white font-bold">Team DOMInators</div>
                                     <div className="text-slate-400 text-xs">Advanced Marine Analytics Platform</div>

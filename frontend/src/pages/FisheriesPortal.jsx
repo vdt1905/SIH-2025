@@ -8,12 +8,14 @@ import {
     Microscope, LineChart, PieChart, Monitor, Satellite, FlaskConical
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import VarunAIAgent from '../components/VarunAiAgent';
 
 // Navbar Component
 
 
 export default function FisheriesPortal() {
     const [selectedAnalysis, setSelectedAnalysis] = useState('Stock Assessment');
+    const [isVarunOpen, setIsVarunOpen] = useState(false);
     const [selectedRegion, setSelectedRegion] = useState('Arabian Sea');
     const [timeFilter, setTimeFilter] = useState('Last 30 Days');
     const [vesselFilter, setVesselFilter] = useState('All Vessels');
@@ -522,6 +524,11 @@ export default function FisheriesPortal() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
             <Navbar />
+            <VarunAIAgent 
+    isOpen={isVarunOpen} 
+    onToggle={() => setIsVarunOpen(!isVarunOpen)}
+    currentPage="fisheries" // or "oceanography", "edna", "digital_twin", etc.
+/>
             
             <div className="pt-24 px-4">
                 <div className="max-w-7xl mx-auto">

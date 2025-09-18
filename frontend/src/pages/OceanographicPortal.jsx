@@ -8,11 +8,13 @@ import {
 } from 'lucide-react';
 import * as d3 from 'd3';
 import Navbar from '../components/Navbar';
+import VarunAIAgent from '../components/VarunAiAgent';
 
 // Navbar Component
 
 
 export default function OceanographicPortal() {
+    const [isVarunOpen, setIsVarunOpen] = useState(false);
     const [selectedParameter, setSelectedParameter] = useState('Temperature');
     const [selectedRegion, setSelectedRegion] = useState('Arabian Sea');
     const [timeFilter, setTimeFilter] = useState('Last 7 Days');
@@ -541,6 +543,11 @@ export default function OceanographicPortal() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
             <Navbar />
+            <VarunAIAgent 
+    isOpen={isVarunOpen} 
+    onToggle={() => setIsVarunOpen(!isVarunOpen)}
+    currentPage="oceanography" // or "oceanography", "edna", "digital_twin", etc.
+/>
             
             <div className="pt-24 px-4">
                 <div className="max-w-7xl mx-auto">

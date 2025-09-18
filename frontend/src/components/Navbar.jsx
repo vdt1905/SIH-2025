@@ -57,14 +57,14 @@ export default function Navbar() {
 
 
                         {/* Notifications */}
-                        <div className="relative">
+                        {/* <div className="relative">
                             <Bell className="w-5 h-5 text-cyan-300 hover:text-white cursor-pointer transition-colors" />
                             {notifications > 0 && (
                                 <div className="absolute -top-2 -right-2 bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
                                     {notifications}
                                 </div>
                             )}
-                        </div>
+                        </div> */}
 
                         {/* User Profile */}
 
