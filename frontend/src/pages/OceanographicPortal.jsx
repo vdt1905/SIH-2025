@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import * as d3 from 'd3';
 import Navbar from '../components/Navbar';
-import VarunAIAgent from '../components/VarunAiAgent';
+import VarunAIAgent from '../components/VarunAIAgent';
 
 // Navbar Component
 
@@ -840,13 +840,7 @@ export default function OceanographicPortal() {
                                 </div>
 
                                 {/* Salinity Profile */}
-                                <div className="col-span-6 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-4">
-                                    <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                        <Droplets className="w-5 h-5 text-green-400" />
-                                        Salinity vs Depth
-                                    </h3>
-                                    <div ref={salinityChartRef} className="w-full"></div>
-                                </div>
+                                
                             </div>
 
                             {/* Current Analysis & Water Mass */}

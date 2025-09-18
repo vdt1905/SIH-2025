@@ -8,7 +8,7 @@ import {
     Microscope, LineChart, PieChart, Monitor, Satellite, FlaskConical
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import VarunAIAgent from '../components/VarunAiAgent';
+import VarunAIAgent from '../components/VarunAIAgent';
 
 // Navbar Component
 

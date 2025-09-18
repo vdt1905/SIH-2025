@@ -6,7 +6,7 @@ import {
 } from 'lucide-react';
 import * as d3 from 'd3';
 import Navbar from '../components/Navbar';
-import VarunAIAgent from '../components/VarunAiAgent';
+import VarunAIAgent from '../components/VarunAIAgent';
 
 
 

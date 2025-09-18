@@ -2,8 +2,9 @@ import Features from '../components/Features'
 import Hero from '../components/Hero'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
-import VarunAIAgent from '../components/VarunAiAgent'
+import VarunAIAgent from '../components/VarunAIAgent'
 import { useState } from 'react'
+
 
 function Home() {
     const [isVarunOpen, setIsVarunOpen] = useState(false);

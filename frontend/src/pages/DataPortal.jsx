@@ -6,7 +6,7 @@ import {
     FileDown, FileText, Settings, Eye, Edit, Trash2, Plus
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import VarunAIAgent from '../components/VarunAiAgent';
+import VarunAIAgent from '../components/VarunAIAgent';
 
 // Enhanced Navbar Component
 
