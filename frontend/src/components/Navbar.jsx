@@ -83,11 +83,11 @@ export default function Navbar() {
                 {isMobileMenuOpen && (
                     <div className="lg:hidden mt-2 rounded-2xl border border-white/20 bg-slate-900/95 backdrop-blur-xl p-6 animate-in slide-in-from-top duration-300">
                         <div className="space-y-4">
-                            <MobileNavLink icon={Database} href="#data-hub" label="Unified Data Hub" />
-                            <MobileNavLink icon={Waves} href="#oceanography" label="Oceanographic Analysis" />
-                            <MobileNavLink icon={Fish} href="#fisheries" label="Fisheries Intelligence" />
-                            <MobileNavLink icon={Dna} href="#molecular" label="eDNA & Molecular Data" />
-                            <MobileNavLink icon={Globe} href="#ecosystem" label="Marine Digital Twin" />
+                           <MobileNavLink icon={Database} href="/data" label="Data Hub" />
+                        <MobileNavLink icon={Waves} href="/oceanography" label="Oceanography" />
+                        <MobileNavLink icon={Fish} href="/fisheries" label="Fisheries" />
+                        <MobileNavLink icon={Dna} href="/edna" label="eDNA Portal" />
+                        <MobileNavLink icon={Globe} href="/marine" label="Digital Twin" />
                         </div>
                         <div className="mt-6 pt-4 border-t border-white/20">
                             <button className="w-full px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25">
