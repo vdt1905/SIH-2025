@@ -536,9 +536,7 @@ export default function FisheriesPortal() {
                         {/* Enhanced Sidebar */}
                         <div className="w-64 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 h-fit">
                             <div className="flex items-center gap-3 mb-8">
-                                <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center">
-                                    <span className="text-white font-bold text-sm">TD</span>
-                                </div>
+                                
                                 <div>
                                     <div className="text-white font-bold">Team DOMInators</div>
                                     <div className="text-slate-400 text-xs">CMLRE Fisheries Intelligence</div>
