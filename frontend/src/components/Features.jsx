@@ -106,7 +106,7 @@ export default function Features() {
     <section
       id="features"
       ref={sectionRef}
-      className="relative px-6 py-20 bg-gradient-to-b from-slate-900/95 via-slate-800/90 to-slate-900/95 overflow-hidden"
+      className="relative px-6 py-20 bg-gradient-to-b from-slate-800/95 via-slate-800/90 to-slate-900/95 overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(56,189,248,0.1),transparent_50%)]"></div>
@@ -168,9 +168,9 @@ export default function Features() {
 
                 {/* Enhanced Icon and Title */}
                 <div className="flex items-start gap-4 mb-6 relative">
-                  <div className={`p-3 rounded-2xl bg-gradient-to-br ${feat.gradient} shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110`}>
+                  {/* <div className={`p-3 rounded-2xl bg-gradient-to-br ${feat.gradient} shadow-lg group-hover:shadow-xl transition-all duration-500 group-hover:scale-110`}>
                     <Icon className="w-7 h-7 text-white" />
-                  </div>
+                  </div> */}
                   <div className="flex-1">
                     <h4 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors duration-300">
                       {feat.title}

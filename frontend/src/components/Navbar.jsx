@@ -44,11 +44,11 @@ export default function Navbar() {
 
                     {/* Desktop Navigation */}
                     <div className="hidden lg:flex items-center gap-8">
-                        <NavLink icon={Database} href="#data-hub" label="Data Hub" />
-                        <NavLink icon={Waves} href="#oceanography" label="Oceanography" />
+                        <NavLink icon={Database} href="/data" label="Data Hub" />
+                        <NavLink icon={Waves} href="/oceanography" label="Oceanography" />
                         <NavLink icon={Fish} href="#fisheries" label="Fisheries" />
-                        <NavLink icon={Dna} href="#molecular" label="eDNA Portal" />
-                        <NavLink icon={Globe} href="#ecosystem" label="Digital Twin" />
+                        <NavLink icon={Dna} href="edna" label="eDNA Portal" />
+                        <NavLink icon={Globe} href="/marine" label="Digital Twin" />
                     </div>
 
                     {/* Right Section */}

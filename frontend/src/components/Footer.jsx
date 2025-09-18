@@ -16,10 +16,7 @@ export default function Footer() {
                     {/* Brand Section */}
                     <div className="lg:col-span-1">
                         <div className="flex items-center gap-3 mb-4">
-                            <div className="relative">
-                                <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-cyan-400 via-blue-500 to-indigo-600 shadow-lg shadow-blue-500/50" />
-                                <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-300 to-blue-400 opacity-0 animate-pulse" />
-                            </div>
+                            
                             <div>
                                 <span className="font-black text-2xl text-white tracking-wide">S.A.G.A.R.</span>
                                 <div className="text-xs text-cyan-300 font-medium">Marine Data Intelligence</div>
@@ -49,7 +46,7 @@ export default function Footer() {
                             Platform
                         </h4>
                         <ul className="space-y-3">
-                            <li><FooterLink href="#data-hub" text="Unified Data Hub" isNew /></li>
+                            <li><FooterLink href="/data" text="Unified Data Hub" isNew /></li>
                             <li><FooterLink href="#oceanography" text="Oceanographic Analysis" /></li>
                             <li><FooterLink href="#fisheries" text="Fisheries Intelligence" /></li>
                             <li><FooterLink href="#molecular" text="eDNA & Molecular Data" isNew /></li>
@@ -59,7 +56,7 @@ export default function Footer() {
                     </div>
 
                     {/* Research & Collaboration */}
-                    <div>
+                    {/* <div>
                         <h4 className="text-white font-bold mb-4 flex items-center gap-2">
                             <Users className="w-4 h-4 text-emerald-400" />
                             Research & Partners
@@ -72,7 +69,7 @@ export default function Footer() {
                             <li><FooterLink href="#training" text="Training Programs" isNew /></li>
                             <li><FooterLink href="#support" text="Developer Support" /></li>
                         </ul>
-                    </div>
+                    </div> */}
 
                     {/* Contact & Legal */}
                     <div>

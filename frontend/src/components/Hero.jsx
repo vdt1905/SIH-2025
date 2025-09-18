@@ -9,7 +9,7 @@ export default function Hero() {
     const stats = [
         { value: "2.5M+", label: "Marine Datasets", icon: Database },
         { value: "15+", label: "Research Institutes", icon: Globe },
-        { value: "99.9%", label: "Data Accuracy", icon: Shield },
+        { value: "93.7%", label: "Data Accuracy", icon: Shield },
         { value: "Real-time", label: "Analytics", icon: Zap }
     ];
 
@@ -53,10 +53,10 @@ export default function Hero() {
 
             <div className="relative z-10 max-w-6xl mx-auto">
                 {/* Status Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 text-emerald-300 text-sm font-semibold mb-6 backdrop-blur-sm">
+                {/* <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 text-emerald-300 text-sm font-semibold mb-6 backdrop-blur-sm">
                     <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
                     Ministry of Earth Sciences - National Marine Initiative
-                </div>
+                </div> */}
 
                 {/* Main Heading */}
                 <h1 className="text-5xl md:text-7xl font-black leading-tight mb-6 text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400">
@@ -83,18 +83,18 @@ export default function Hero() {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
                     <button className="group px-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:via-blue-500 hover:to-indigo-500 shadow-xl shadow-cyan-500/25 transition-all duration-300 flex items-center gap-2 hover:scale-105">
-                        <Brain className="w-5 h-5" />
+                        
                         Access VARUN AI
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </button>
                     
-                    <button 
+                    {/* <button 
                         onClick={() => setIsVideoModalOpen(true)}
                         className="group px-8 py-4 rounded-2xl font-bold text-cyan-100 border-2 border-cyan-400/40 bg-white/10 backdrop-blur-md hover:bg-white/20 hover:border-cyan-400/60 transition-all duration-300 flex items-center gap-2 hover:scale-105"
                     >
                         <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
                         Platform Demo
-                    </button>
+                    </button> */}
                 </div>
 
                 {/* Live Statistics */}
