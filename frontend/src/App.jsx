@@ -5,6 +5,7 @@ import MarineDigitalTwinPlatform from "./pages/MarineDigitalTwinPlatform";
 import AIAnalyticsEngine from "./pages/AIAnalyticsEngine"
 import EDNAPortal from "./pages/EDNAportal";
 import OceanographicPortal from "./pages/OceanographicPortal";
+import FisheriesPortal from "./pages/FisheriesPortal";
 function App() {
   return (
     <Router>
@@ -16,6 +17,8 @@ function App() {
           <Route path="/aianalytics" element={<AIAnalyticsEngine />} />
           <Route path="/edna" element={<EDNAPortal />} />
           <Route path="/oceanography" element={<OceanographicPortal />} />
+          <Route path="/fisheries" element={<FisheriesPortal />} />
+
           
         </Routes>
       </div>

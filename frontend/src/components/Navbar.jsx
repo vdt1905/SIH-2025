@@ -46,8 +46,8 @@ export default function Navbar() {
                     <div className="hidden lg:flex items-center gap-8">
                         <NavLink icon={Database} href="/data" label="Data Hub" />
                         <NavLink icon={Waves} href="/oceanography" label="Oceanography" />
-                        <NavLink icon={Fish} href="#fisheries" label="Fisheries" />
-                        <NavLink icon={Dna} href="edna" label="eDNA Portal" />
+                        <NavLink icon={Fish} href="/fisheries" label="Fisheries" />
+                        <NavLink icon={Dna} href="/edna" label="eDNA Portal" />
                         <NavLink icon={Globe} href="/marine" label="Digital Twin" />
                     </div>
 
