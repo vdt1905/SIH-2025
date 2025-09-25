@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Database, Waves, Fish, Dna, Globe, Bell, User, Menu, X } from 'lucide-react';
 import logo from "../assets/DOMinators.jpg";
+import { useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [notifications, setNotifications] = useState(3);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -37,7 +39,14 @@ export default function Navbar() {
                         </div>
 
                         <div>
-                            <span className="font-black text-xl text-white tracking-wide">DOMinators</span>
+                            <nav className=" p-4 cursor-pointer">
+                                <span
+                                    className="font-black text-xl text-white tracking-wide"
+                                    onClick={() => navigate("/")}
+                                >
+                                    DOMinators
+                                </span>
+                            </nav>
                             {/* <div className="text-xs text-cyan-300 font-medium">Marine Data Intelligence</div> */}
                         </div>
                     </div>
@@ -83,11 +92,11 @@ export default function Navbar() {
                 {isMobileMenuOpen && (
                     <div className="lg:hidden mt-2 rounded-2xl border border-white/20 bg-slate-900/95 backdrop-blur-xl p-6 animate-in slide-in-from-top duration-300">
                         <div className="space-y-4">
-                           <MobileNavLink icon={Database} href="/data" label="Data Hub" />
-                        <MobileNavLink icon={Waves} href="/oceanography" label="Oceanography" />
-                        <MobileNavLink icon={Fish} href="/fisheries" label="Fisheries" />
-                        <MobileNavLink icon={Dna} href="/edna" label="eDNA Portal" />
-                        <MobileNavLink icon={Globe} href="/marine" label="Digital Twin" />
+                            <MobileNavLink icon={Database} href="/data" label="Data Hub" />
+                            <MobileNavLink icon={Waves} href="/oceanography" label="Oceanography" />
+                            <MobileNavLink icon={Fish} href="/fisheries" label="Fisheries" />
+                            <MobileNavLink icon={Dna} href="/edna" label="eDNA Portal" />
+                            <MobileNavLink icon={Globe} href="/marine" label="Digital Twin" />
                         </div>
                         <div className="mt-6 pt-4 border-t border-white/20">
                             <button className="w-full px-6 py-3 rounded-xl font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 transition-all shadow-lg shadow-cyan-500/25">

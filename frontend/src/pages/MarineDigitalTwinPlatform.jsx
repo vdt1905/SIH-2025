@@ -344,7 +344,7 @@ export default function WhaleSharkDigitalTwin() {
     const [whaleSharks, setWhaleSharks] = useState([
         {
             id: 'WS001',
-            name: 'Ganesh',
+            name: 'Whale',
             species: 'Rhincodon typus',
             length: 8.2,
             weight: 12000,
@@ -364,7 +364,7 @@ export default function WhaleSharkDigitalTwin() {
         },
         {
             id: 'WS002',
-            name: 'Lakshmi',
+            name: 'Shark',
             species: 'Rhincodon typus',
             length: 10.5,
             weight: 15000,
@@ -384,7 +384,7 @@ export default function WhaleSharkDigitalTwin() {
         },
         {
             id: 'WS003',
-            name: 'Varun',
+            name: 'Dolphin',
             species: 'Rhincodon typus',
             length: 7.8,
             weight: 11000,
