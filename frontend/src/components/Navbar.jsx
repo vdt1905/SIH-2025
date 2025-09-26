@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Database, Waves, Fish, Dna, Globe, Bell, User, Menu, X,BotIcon } from 'lucide-react';
+import { Search, Database, Waves, Fish, Dna, Globe, Bell, User, Menu, X, BotIcon } from 'lucide-react';
 import logo from "../assets/DOMinators.jpg";
 import { useNavigate } from 'react-router-dom'
 
@@ -52,14 +52,26 @@ export default function Navbar() {
                     </div>
 
                     {/* Desktop Navigation */}
-                    <div className="hidden lg:flex items-center gap-8">
-                        <NavLink icon={Database} href="/data" label="Data Hub" />
-                        <NavLink icon={Waves} href="/oceanography" label="Oceanography" />
-                        <NavLink icon={Fish} href="/fisheries" label="Fisheries" />
-                        <NavLink icon={Dna} href="/edna" label="eDNA Portal" />
-                        <NavLink icon={Globe} href="/marine" label="Digital Twin" />
-                        <NavLink icon={BotIcon} href="/analytics" label="AI Copilot" />
-                    </div>
+                   <div className="hidden lg:flex items-center gap-8">
+  <NavLink icon={Database} href="/data" label="Data Hub" />
+  <NavLink icon={Waves} href="/oceanography" label="Oceanography" />
+  <NavLink icon={Fish} href="/fisheries" label="Fisheries" />
+  <NavLink icon={Dna} href="/edna" label="eDNA Portal" />
+  <NavLink icon={Globe} href="/marine" label="Digital Twin" />
+  <NavLink icon={BotIcon} href="/analytics" label="VARUN" />
+
+  {/* User Initial Avatar */}
+  <a
+  href="https://www.linkedin.com/in/nisarg-vashi-b05211282/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-10 h-10 flex items-center justify-center rounded-full bg-blue-800 text-white font-bold hover:bg-blue-700 transition"
+>
+  N
+</a>
+</div>
+
+
 
                     {/* Right Section */}
                     <div className="flex items-center gap-4">

@@ -47,11 +47,11 @@ export default function Footer() {
                         </h4>
                         <ul className="space-y-3">
                             <li><FooterLink href="/data" text="Unified Data Hub" isNew /></li>
-                            <li><FooterLink href="#oceanography" text="Oceanographic Analysis" /></li>
-                            <li><FooterLink href="#fisheries" text="Fisheries Intelligence" /></li>
-                            <li><FooterLink href="#molecular" text="eDNA & Molecular Data" isNew /></li>
-                            <li><FooterLink href="#digital-twin" text="Marine Digital Twin" isNew /></li>
-                            <li><FooterLink href="#varun-ai" text="VARUN AI Assistant" /></li>
+                            <li><FooterLink href="/oceanography" text="Oceanographic Analysis" /></li>
+                            <li><FooterLink href="/fisheries" text="Fisheries Intelligence" /></li>
+                            <li><FooterLink href="/edna" text="eDNA & Molecular Data" isNew /></li>
+                            <li><FooterLink href="/marine" text="Marine Digital Twin" isNew /></li>
+                            <li><FooterLink href="/analytics" text="VARUN AI Assistant" /></li>
                         </ul>
                     </div>
 
@@ -97,12 +97,7 @@ export default function Footer() {
                         </div>
 
                         {/* Legal Links */}
-                        <ul className="space-y-2">
-                            <li><FooterLink href="#privacy" text="Privacy Policy" /></li>
-                            <li><FooterLink href="#terms" text="Terms of Service" /></li>
-                            <li><FooterLink href="#data-policy" text="Data Usage Policy" /></li>
-                            <li><FooterLink href="#compliance" text="Compliance" /></li>
-                        </ul>
+                        
                     </div>
                 </div>
 
@@ -132,12 +127,7 @@ export default function Footer() {
 
                 {/* Social Media & Bottom Bar */}
                 <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-slate-700/50">
-                    <div className="flex items-center gap-6 mb-4 md:mb-0">
-                        <SocialLink href="#" icon={Twitter} label="Twitter" />
-                        <SocialLink href="#" icon={Linkedin} label="LinkedIn" />
-                        <SocialLink href="#" icon={Github} label="GitHub" />
-                        <SocialLink href="#" icon={Globe} label="Website" />
-                    </div>
+                   
                     
                     <div className="text-center md:text-right">
                         <p className="text-slate-400 text-sm">

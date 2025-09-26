@@ -930,7 +930,7 @@ export default function FisheriesPortal() {
                                 <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 hover:border-slate-600/50 transition-colors cursor-pointer"
                                      onClick={() => {setShowModal(true); setModalType('team_dominators');}}>
                                     <div className="text-purple-400 font-medium mb-1">Team DOMInators</div>
-                                    <div className="text-slate-400 text-sm">SIH 2024 Innovation Team</div>
+                                    <div className="text-slate-400 text-sm">SIH 2025 Innovation Team</div>
                                 </div>
                             </div>
                         </div>
