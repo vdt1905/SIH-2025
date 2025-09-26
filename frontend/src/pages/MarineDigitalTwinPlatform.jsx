@@ -328,7 +328,7 @@ export default function WhaleSharkDigitalTwin() {
     const [isStreaming, setIsStreaming] = useState(true);
     const [isVarunOpen, setIsVarunOpen] = useState(false);
     const [selectedShark, setSelectedShark] = useState(null);
-    const [simulationSpeed, setSimulationSpeed] = useState(1);
+    const [simulationSpeed, setSimulationSpeed] = useState(0);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [showAnalytics, setShowAnalytics] = useState(true);
 

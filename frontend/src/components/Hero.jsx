@@ -81,7 +81,7 @@ export default function Hero() {
                 </div>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                {/* <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
                     <button className="group px-8 py-4 rounded-2xl font-bold text-white bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 hover:from-cyan-400 hover:via-blue-500 hover:to-indigo-500 shadow-xl shadow-cyan-500/25 transition-all duration-300 flex items-center gap-2 hover:scale-105">
                         
                         Access VARUN AI
@@ -95,7 +95,7 @@ export default function Hero() {
                         <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
                         Platform Demo
                     </button> */}
-                </div>
+                {/* </div>  */}
 
                 {/* Live Statistics */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto">
