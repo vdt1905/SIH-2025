@@ -599,16 +599,7 @@ export default function VARUNAICopilot() {
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <button
-                                            onClick={toggleVoiceListening}
-                                            className={`p-3 rounded-xl transition-all duration-300 ${
-                                                isListening 
-                                                    ? 'bg-red-500/20 text-red-400 border border-red-500/30 animate-pulse' 
-                                                    : 'bg-green-500/20 text-green-400 border border-green-500/30 hover:bg-green-500/30'
-                                            }`}
-                                        >
-                                            {isListening ? <MicOff className="w-6 h-6" /> : <Mic className="w-6 h-6" />}
-                                        </button>
+                                        
                                         <button
                                             onClick={() => setShowReasoning(!showReasoning)}
                                             className={`px-4 py-2 rounded-xl transition-all duration-300 ${
@@ -963,61 +954,7 @@ function EnhancedSystemOverviewPanel({ systemMetrics, marineData }) {
         { name: 'ISO 19115', compliance: 94.8, status: 'compliant' }
     ];
 
-    return (
-        <div className="bg-slate-800/40 rounded-3xl border border-slate-700/50 backdrop-blur-xl p-8 shadow-2xl">
-            <h4 className="text-white font-bold text-xl mb-6 flex items-center gap-3">
-                <Database className="w-6 h-6 text-cyan-400" />
-                System Infrastructure
-            </h4>
-            
-            {/* Database Performance */}
-            <div className="mb-8">
-                <h5 className="text-slate-300 font-semibold mb-4">Database Performance</h5>
-                <div className="space-y-3">
-                    {databaseData.map((db, index) => (
-                        <div key={index} className="p-3 bg-slate-700/30 rounded-xl">
-                            <div className="flex justify-between items-center mb-2">
-                                <div className="flex items-center gap-2">
-                                    <div 
-                                        className="w-3 h-3 rounded-full"
-                                        style={{ backgroundColor: db.color }}
-                                    ></div>
-                                    <span className="text-white font-medium text-sm">{db.name}</span>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <span className="text-slate-400 text-xs">{db.queries}</span>
-                                    <span className={`text-xs px-2 py-1 rounded-full ${
-                                        db.status === 'optimal' ? 'bg-green-500/20 text-green-300' :
-                                        db.status === 'high' ? 'bg-blue-500/20 text-blue-300' :
-                                        'bg-yellow-500/20 text-yellow-300'
-                                    }`}>
-                                        {db.status}
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="flex justify-between text-sm mb-1">
-                                <span className="text-slate-300">Usage</span>
-                                <span className="text-white font-mono">{db.usage.toFixed(1)}%</span>
-                            </div>
-                            <div className="w-full bg-slate-600/50 rounded-full h-2">
-                                <div 
-                                    className="h-2 rounded-full transition-all duration-1000"
-                                    style={{ 
-                                        width: `${db.usage}%`, 
-                                        backgroundColor: db.color,
-                                        boxShadow: `0 0 10px ${db.color}50`
-                                    }}
-                                ></div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Standards Compliance */}
-            
-        </div>
-    );
+   
 }
 
 // Utility Functions

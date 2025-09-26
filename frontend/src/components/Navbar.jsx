@@ -58,7 +58,7 @@ export default function Navbar() {
                         <NavLink icon={Fish} href="/fisheries" label="Fisheries" />
                         <NavLink icon={Dna} href="/edna" label="eDNA Portal" />
                         <NavLink icon={Globe} href="/marine" label="Digital Twin" />
-                        <NavLink icon={BotIcon} href="/analytics" label="AI Assistant" />
+                        <NavLink icon={BotIcon} href="/analytics" label="AI Copilot" />
                     </div>
 
                     {/* Right Section */}
