@@ -1381,6 +1381,915 @@
 //     );
 // }
 
+// import React, { useState, useEffect } from 'react';
+// import { 
+//     Search, Database, Waves, Fish, Dna, Globe, Download, Filter, 
+//     RefreshCw, Eye, MapPin, Calendar, FileText, Settings, HelpCircle,
+//     Lock, Unlock, BarChart3, TrendingUp, ExternalLink, Play,
+//     ChevronDown, ChevronUp, Info, DownloadCloud, Server, Clock,
+//     Users, Shield, Zap, Layers, Map, PieChart, Activity, Thermometer,
+//     Navigation, Wind, Cloud, AlertCircle, CheckCircle, X
+// } from 'lucide-react';
+// import Navbar from '../components/Navbar';
+// import VarunAIAgent from '../components/VarunAIAgent';
+
+// export default function DataHub() {
+//     const [selectedCategory, setSelectedCategory] = useState('all');
+//     const [isVarunOpen, setIsVarunOpen] = useState(false);
+//     const [searchTerm, setSearchTerm] = useState('');
+//     const [selectedDatasets, setSelectedDatasets] = useState([]);
+//     const [sortBy, setSortBy] = useState('name');
+//     const [sortDirection, setSortDirection] = useState('asc');
+//     const [previewDataset, setPreviewDataset] = useState(null);
+//     const [activeFilters, setActiveFilters] = useState({
+//         domain: [],
+//         access: [],
+//         format: [],
+//         status: []
+//     });
+//     const [isLoading, setIsLoading] = useState(false);
+//     const [downloadProgress, setDownloadProgress] = useState({});
+//     const [notifications, setNotifications] = useState([]);
+
+//     // Enhanced dataset catalog with rich metadata and sample data
+//     const datasets = [
+//         {
+//             id: 'oce-001',
+//             name: 'Arabian Sea Temperature Profiles',
+//             type: 'Oceanographic',
+//             domain: 'oceanography',
+//             description: 'High-resolution temperature measurements from Arabian Sea buoys and ARGO floats with depth profiles and seasonal variations',
+//             format: 'NetCDF',
+//             size: '2.4 GB',
+//             timeRange: '2018-2024',
+//             frequency: 'Daily',
+//             access: 'public',
+//             quality: 98.5,
+//             variables: ['temperature', 'salinity', 'pressure', 'depth', 'timestamp'],
+//             location: 'Arabian Sea',
+//             institution: 'National Institute of Oceanography',
+//             license: 'CC BY 4.0',
+//             lastUpdated: '2024-04-26',
+//             sampleSize: '15M records',
+//             previewAvailable: true,
+//             apiEndpoint: '/api/datasets/oce-001',
+//             icon: Thermometer,
+//             color: 'cyan',
+//             tags: ['real-time', 'climate', 'monitoring'],
+//             sampleData: [
+//                 { depth: '0m', temp: 28.5, salinity: 35.2, pressure: 1013 },
+//                 { depth: '10m', temp: 27.8, salinity: 35.3, pressure: 1023 },
+//                 { depth: '50m', temp: 25.2, salinity: 35.5, pressure: 1523 },
+//                 { depth: '100m', temp: 22.1, salinity: 35.8, pressure: 2033 }
+//             ]
+//         },
+//         {
+//             id: 'fish-002',
+//             name: 'Indian Ocean Fisheries Catch Data',
+//             type: 'Fisheries',
+//             domain: 'fisheries',
+//             description: 'Commercial fishing catch data with species identification, vessel tracking, and environmental conditions',
+//             format: 'CSV',
+//             size: '850 MB',
+//             timeRange: '2020-2024',
+//             frequency: 'Monthly',
+//             access: 'restricted',
+//             quality: 95.2,
+//             variables: ['species', 'catch_weight', 'vessel_id', 'location', 'timestamp', 'gear_type'],
+//             location: 'Indian Ocean EEZ',
+//             institution: 'Fisheries Survey of India',
+//             license: 'Restricted - Requires Approval',
+//             lastUpdated: '2024-04-25',
+//             sampleSize: '2.4M records',
+//             previewAvailable: true,
+//             apiEndpoint: '/api/datasets/fish-002',
+//             icon: Fish,
+//             color: 'emerald',
+//             tags: ['commercial', 'species', 'tracking'],
+//             sampleData: [
+//                 { species: 'Tuna', weight: 2450, vessel: 'IND-FV-001', location: '12.5N, 73.2E' },
+//                 { species: 'Mackerel', weight: 1800, vessel: 'IND-FV-003', location: '11.8N, 72.9E' },
+//                 { species: 'Sardine', weight: 3200, vessel: 'IND-FV-007', location: '13.1N, 73.5E' }
+//             ]
+//         },
+//         {
+//             id: 'edna-003',
+//             name: 'Marine eDNA Biodiversity Survey',
+//             type: 'eDNA',
+//             domain: 'molecular',
+//             description: 'Environmental DNA sequencing data for marine biodiversity assessment and species detection',
+//             format: 'FASTA',
+//             size: '15.2 GB',
+//             timeRange: '2023-2024',
+//             frequency: 'Quarterly',
+//             access: 'public',
+//             quality: 97.8,
+//             variables: ['species_detected', 'confidence', 'location', 'sample_id', 'sequence_length'],
+//             location: 'Lakshadweep Islands',
+//             institution: 'CSIR-NIO',
+//             license: 'CC BY-NC 4.0',
+//             lastUpdated: '2024-04-24',
+//             sampleSize: '45,000 sequences',
+//             previewAvailable: true,
+//             apiEndpoint: '/api/datasets/edna-003',
+//             icon: Dna,
+//             color: 'violet',
+//             tags: ['biodiversity', 'sequencing', 'conservation'],
+//             sampleData: [
+//                 { species: 'Acropora muricata', confidence: 0.98, location: '11.7N, 72.2E' },
+//                 { species: 'Thunnus albacares', confidence: 0.95, location: '11.6N, 72.3E' },
+//                 { species: 'Dugong dugon', confidence: 0.92, location: '11.8N, 72.1E' }
+//             ]
+//         },
+//         {
+//             id: 'img-004',
+//             name: 'Coral Reef Satellite Imagery',
+//             type: 'Imagery',
+//             domain: 'remote_sensing',
+//             description: 'High-resolution satellite imagery for coral reef monitoring, bleaching detection, and habitat mapping',
+//             format: 'GeoTIFF',
+//             size: '45.8 GB',
+//             timeRange: '2022-2024',
+//             frequency: 'Weekly',
+//             access: 'public',
+//             quality: 96.3,
+//             variables: ['reflectance', 'ndvi', 'water_quality', 'chlorophyll', 'turbidity'],
+//             location: 'Gulf of Mannar',
+//             institution: 'ISRO',
+//             license: 'Open Data',
+//             lastUpdated: '2024-04-23',
+//             sampleSize: '1,200 images',
+//             previewAvailable: true,
+//             apiEndpoint: '/api/datasets/img-004',
+//             icon: Map,
+//             color: 'amber',
+//             tags: ['satellite', 'monitoring', 'habitat'],
+//             sampleData: [
+//                 { date: '2024-04-01', area: 'North Reef', health: 85, chlorophyll: 0.32 },
+//                 { date: '2024-04-08', area: 'South Reef', health: 78, chlorophyll: 0.45 },
+//                 { date: '2024-04-15', area: 'East Atoll', health: 92, chlorophyll: 0.28 }
+//             ]
+//         },
+//         {
+//             id: 'tax-005',
+//             name: 'Marine Species Taxonomy Database',
+//             type: 'Taxonomy',
+//             domain: 'biodiversity',
+//             description: 'Comprehensive taxonomic database of marine species with phylogenetic relationships and distribution data',
+//             format: 'JSON',
+//             size: '320 MB',
+//             timeRange: '1758-2024',
+//             frequency: 'Annual',
+//             access: 'public',
+//             quality: 99.1,
+//             variables: ['species', 'classification', 'distribution', 'conservation_status', 'habitat'],
+//             location: 'Global',
+//             institution: 'WoRMS',
+//             license: 'CC0 1.0',
+//             lastUpdated: '2024-04-22',
+//             sampleSize: '240,000 species',
+//             previewAvailable: true,
+//             apiEndpoint: '/api/datasets/tax-005',
+//             icon: Users,
+//             color: 'blue',
+//             tags: ['taxonomy', 'phylogeny', 'global'],
+//             sampleData: [
+//                 { species: 'Carcharodon carcharias', family: 'Lamnidae', status: 'Vulnerable' },
+//                 { species: 'Chelonia mydas', family: 'Cheloniidae', status: 'Endangered' },
+//                 { species: 'Manta birostris', family: 'Mobulidae', status: 'Vulnerable' }
+//             ]
+//         },
+//         {
+//             id: 'wave-006',
+//             name: 'Coastal Wave Height Monitoring',
+//             type: 'Wave Data',
+//             domain: 'oceanography',
+//             description: 'Real-time wave height and direction data from coastal monitoring stations and buoys',
+//             format: 'CSV',
+//             size: '1.2 GB',
+//             timeRange: '2023-2024',
+//             frequency: 'Hourly',
+//             access: 'restricted',
+//             quality: 94.7,
+//             variables: ['wave_height', 'wave_period', 'direction', 'water_level', 'timestamp'],
+//             location: 'Indian Coastline',
+//             institution: 'INCOIS',
+//             license: 'Research Use Only',
+//             lastUpdated: '2024-04-26',
+//             sampleSize: '8.7M records',
+//             previewAvailable: false,
+//             apiEndpoint: '/api/datasets/wave-006',
+//             icon: TrendingUp,
+//             color: 'indigo',
+//             tags: ['real-time', 'coastal', 'safety'],
+//             sampleData: [
+//                 { station: 'GOA-001', height: 2.3, period: 8.5, direction: 145 },
+//                 { station: 'KER-002', height: 1.8, period: 7.2, direction: 120 },
+//                 { station: 'TN-003', height: 2.1, period: 9.1, direction: 135 }
+//             ]
+//         },
+//         {
+//             id: 'curr-007',
+//             name: 'Ocean Current Patterns',
+//             type: 'Current Data',
+//             domain: 'oceanography',
+//             description: 'Surface and subsurface current velocity data from ADCP measurements and satellite altimetry',
+//             format: 'NetCDF',
+//             size: '3.1 GB',
+//             timeRange: '2021-2024',
+//             frequency: '6-hourly',
+//             access: 'public',
+//             quality: 96.8,
+//             variables: ['u_velocity', 'v_velocity', 'depth', 'timestamp', 'quality_flag'],
+//             location: 'Bay of Bengal',
+//             institution: 'NIOT',
+//             license: 'CC BY 4.0',
+//             lastUpdated: '2024-04-20',
+//             sampleSize: '12.5M records',
+//             previewAvailable: true,
+//             apiEndpoint: '/api/datasets/curr-007',
+//             icon: Navigation,
+//             color: 'cyan',
+//             tags: ['currents', 'velocity', 'circulation'],
+//             sampleData: [
+//                 { depth: '0m', u_vel: 0.45, v_vel: 0.32, speed: 0.55 },
+//                 { depth: '50m', u_vel: 0.32, v_vel: 0.28, speed: 0.43 },
+//                 { depth: '100m', u_vel: 0.18, v_vel: 0.15, speed: 0.23 }
+//             ]
+//         },
+//         {
+//             id: 'qual-008',
+//             name: 'Coastal Water Quality',
+//             type: 'Water Quality',
+//             domain: 'environmental',
+//             description: 'Comprehensive water quality parameters including nutrients, pollutants, and biological indicators',
+//             format: 'CSV',
+//             size: '650 MB',
+//             timeRange: '2020-2024',
+//             frequency: 'Monthly',
+//             access: 'public',
+//             quality: 93.4,
+//             variables: ['ph', 'do', 'nutrients', 'turbidity', 'heavy_metals'],
+//             location: 'Coastal India',
+//             institution: 'CPCB',
+//             license: 'Open Government Data',
+//             lastUpdated: '2024-04-18',
+//             sampleSize: '1.8M records',
+//             previewAvailable: true,
+//             apiEndpoint: '/api/datasets/qual-008',
+//             icon: Activity,
+//             color: 'emerald',
+//             tags: ['quality', 'pollution', 'monitoring'],
+//             sampleData: [
+//                 { location: 'Mumbai Coast', ph: 7.8, do: 6.2, turbidity: 12.5 },
+//                 { location: 'Chennai Coast', ph: 8.1, do: 5.8, turbidity: 15.2 },
+//                 { location: 'Kolkata Coast', ph: 7.9, do: 6.0, turbidity: 18.7 }
+//             ]
+//         }
+//     ];
+
+//     // Add notification
+//     const addNotification = (message, type = 'info') => {
+//         const id = Date.now();
+//         const notification = { id, message, type };
+//         setNotifications(prev => [...prev, notification]);
+//         setTimeout(() => {
+//             setNotifications(prev => prev.filter(n => n.id !== id));
+//         }, 5000);
+//     };
+
+//     // Simulate download with progress
+//     const simulateDownload = (datasetId) => {
+//         setIsLoading(true);
+//         setDownloadProgress(prev => ({ ...prev, [datasetId]: 0 }));
+        
+//         const interval = setInterval(() => {
+//             setDownloadProgress(prev => {
+//                 const newProgress = prev[datasetId] + Math.random() * 15;
+//                 if (newProgress >= 100) {
+//                     clearInterval(interval);
+//                     setIsLoading(false);
+//                     addNotification(`Download completed: ${datasets.find(d => d.id === datasetId)?.name}`, 'success');
+//                     return { ...prev, [datasetId]: 100 };
+//                 }
+//                 return { ...prev, [datasetId]: newProgress };
+//             });
+//         }, 200);
+//     };
+
+//     // Filter and sort datasets
+//     const filteredDatasets = datasets
+//         .filter(dataset => {
+//             if (selectedCategory !== 'all' && dataset.domain !== selectedCategory) return false;
+            
+//             if (searchTerm && !dataset.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+//                 !dataset.description.toLowerCase().includes(searchTerm.toLowerCase()) &&
+//                 !dataset.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))) return false;
+            
+//             if (activeFilters.domain.length > 0 && !activeFilters.domain.includes(dataset.domain)) return false;
+//             if (activeFilters.access.length > 0 && !activeFilters.access.includes(dataset.access)) return false;
+//             if (activeFilters.format.length > 0 && !activeFilters.format.includes(dataset.format)) return false;
+//             if (activeFilters.status.length > 0) {
+//                 if (activeFilters.status.includes('preview') && !dataset.previewAvailable) return false;
+//                 if (activeFilters.status.includes('recent') && !isRecent(dataset.lastUpdated)) return false;
+//             }
+            
+//             return true;
+//         })
+//         .sort((a, b) => {
+//             let aVal = a[sortBy];
+//             let bVal = b[sortBy];
+            
+//             if (sortBy === 'lastUpdated') {
+//                 aVal = new Date(aVal);
+//                 bVal = new Date(bVal);
+//             }
+            
+//             if (sortBy === 'quality' || sortBy === 'size') {
+//                 aVal = parseFloat(aVal);
+//                 bVal = parseFloat(bVal);
+//             }
+            
+//             if (aVal < bVal) return sortDirection === 'asc' ? -1 : 1;
+//             if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
+//             return 0;
+//         });
+
+//     const isRecent = (date) => {
+//         const diffTime = Math.abs(new Date() - new Date(date));
+//         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+//         return diffDays <= 30;
+//     };
+
+//     const handleSort = (field) => {
+//         if (sortBy === field) {
+//             setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+//         } else {
+//             setSortBy(field);
+//             setSortDirection('asc');
+//         }
+//     };
+
+//     const toggleFilter = (filterType, value) => {
+//         setActiveFilters(prev => ({
+//             ...prev,
+//             [filterType]: prev[filterType].includes(value)
+//                 ? prev[filterType].filter(v => v !== value)
+//                 : [...prev[filterType], value]
+//         }));
+//     };
+
+//     const handleDatasetSelect = (id) => {
+//         setSelectedDatasets(prev =>
+//             prev.includes(id)
+//                 ? prev.filter(datasetId => datasetId !== id)
+//                 : [...prev, id]
+//         );
+//     };
+
+//     const handleSelectAll = () => {
+//         if (selectedDatasets.length === filteredDatasets.length) {
+//             setSelectedDatasets([]);
+//         } else {
+//             setSelectedDatasets(filteredDatasets.map(d => d.id));
+//         }
+//     };
+
+//     const handlePreview = (dataset) => {
+//         setPreviewDataset(dataset);
+//         addNotification(`Previewing dataset: ${dataset.name}`, 'info');
+//     };
+
+//     const handleDownload = async (dataset = null) => {
+//         const datasetsToDownload = dataset ? [dataset.id] : selectedDatasets;
+        
+//         if (datasetsToDownload.length === 0) {
+//             addNotification('Please select at least one dataset to download', 'warning');
+//             return;
+//         }
+
+//         datasetsToDownload.forEach(datasetId => {
+//             const dataset = datasets.find(d => d.id === datasetId);
+//             if (dataset.access === 'restricted') {
+//                 addNotification(`Access requested for: ${dataset.name}. Approval required.`, 'warning');
+//             } else {
+//                 simulateDownload(datasetId);
+//             }
+//         });
+//     };
+
+//     const clearAllFilters = () => {
+//         setSearchTerm('');
+//         setSelectedCategory('all');
+//         setActiveFilters({ domain: [], access: [], format: [], status: [] });
+//         setSelectedDatasets([]);
+//         addNotification('All filters cleared', 'info');
+//     };
+
+//     const getIconColor = (color) => {
+//         const colors = {
+//             cyan: 'text-cyan-400',
+//             emerald: 'text-emerald-400',
+//             violet: 'text-violet-400',
+//             amber: 'text-amber-400',
+//             blue: 'text-blue-400',
+//             indigo: 'text-indigo-400'
+//         };
+//         return colors[color] || 'text-slate-400';
+//     };
+
+//     const getBgColor = (color) => {
+//         const colors = {
+//             cyan: 'bg-cyan-500/20',
+//             emerald: 'bg-emerald-500/20',
+//             violet: 'bg-violet-500/20',
+//             amber: 'bg-amber-500/20',
+//             blue: 'bg-blue-500/20',
+//             indigo: 'bg-indigo-500/20'
+//         };
+//         return colors[color] || 'bg-slate-500/20';
+//     };
+
+//     const getDomainIcon = (domain) => {
+//         const icons = {
+//             oceanography: Waves,
+//             fisheries: Fish,
+//             molecular: Dna,
+//             remote_sensing: Map,
+//             biodiversity: Users,
+//             environmental: Activity
+//         };
+//         return icons[domain] || Database;
+//     };
+
+//     return (
+//         <div className="min-h-100 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-7">
+//             <Navbar />
+//             <VarunAIAgent 
+//                 isOpen={isVarunOpen} 
+//                 onToggle={() => setIsVarunOpen(!isVarunOpen)}
+//                 currentPage="data_hub"
+//             />
+            
+//             {/* Notifications */}
+//             <div className="fixed top-20 right-4 z-50 space-y-2">
+//                 {notifications.map(notification => (
+//                     <div
+//                         key={notification.id}
+//                         className={`flex items-center gap-3 px-4 py-3 rounded-lg border backdrop-blur-sm transition-all duration-300 ${
+//                             notification.type === 'success'
+//                                 ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-300'
+//                                 : notification.type === 'warning'
+//                                 ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
+//                                 : 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300'
+//                         }`}
+//                     >
+//                         {notification.type === 'success' ? (
+//                             <CheckCircle className="w-4 h-4" />
+//                         ) : notification.type === 'warning' ? (
+//                             <AlertCircle className="w-4 h-4" />
+//                         ) : (
+//                             <Info className="w-4 h-4" />
+//                         )}
+//                         <span className="text-sm">{notification.message}</span>
+//                         <button
+//                             onClick={() => setNotifications(prev => prev.filter(n => n.id !== notification.id))}
+//                             className="text-slate-400 hover:text-white"
+//                         >
+//                             <X className="w-3 h-3" />
+//                         </button>
+//                     </div>
+//                 ))}
+//             </div>
+
+//             <div className="pt-24 px-4">
+//                 <div className="max-w-7xl mx-auto">
+//                     {/* Enhanced Header */}
+//                     <div className="mb-8 text-center">
+//                         <div className="flex items-center justify-center gap-3 mb-4">
+//                             <div className="p-3 bg-cyan-500/20 rounded-2xl">
+//                                 <Database className="w-8 h-8 text-cyan-400" />
+//                             </div>
+//                             <h1 className="text-4xl font-bold text-white">Data Hub</h1>
+//                         </div>
+//                         <p className="text-xl text-slate-300 max-w-3xl mx-auto">
+//                             Unified Marine Dataset Catalog — Explore metadata, access controls, and preview marine datasets 
+//                             (oceanography, eDNA, fisheries, biodiversity, and more)
+//                         </p>
+//                         <div className="mt-4 flex items-center justify-center gap-4 text-sm text-slate-400">
+//                             <div className="flex items-center gap-1">
+//                                 <Server className="w-4 h-4" />
+//                                 {datasets.length} curated datasets
+//                             </div>
+//                             <div className="flex items-center gap-1">
+//                                 <Shield className="w-4 h-4" />
+//                                 Secure access controls
+//                             </div>
+//                             <div className="flex items-center gap-1">
+//                                 <Zap className="w-4 h-4" />
+//                                 Real-time previews
+//                             </div>
+//                         </div>
+//                     </div>
+
+//                     <div className="flex gap-6">
+//                         {/* Enhanced Filters Sidebar */}
+//                         <div className="w-80 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 h-fit sticky top-24">
+//                             <div className="mb-6">
+//                                 <div className="relative">
+//                                     <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+//                                     <input
+//                                         type="text"
+//                                         placeholder="Search datasets..."
+//                                         value={searchTerm}
+//                                         onChange={(e) => setSearchTerm(e.target.value)}
+//                                         className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-3 py-2 text-white placeholder-slate-400 focus:border-cyan-400 transition-colors"
+//                                     />
+//                                 </div>
+//                             </div>
+
+//                             <div className="space-y-6">
+//                                 {/* Quick Categories */}
+//                                 <div>
+//                                     <h3 className="text-white font-medium mb-3 flex items-center gap-2">
+//                                         <Layers className="w-4 h-4" />
+//                                         Data Categories
+//                                     </h3>
+//                                     <div className="space-y-2">
+//                                         {['all', 'oceanography', 'fisheries', 'molecular', 'remote_sensing', 'biodiversity', 'environmental'].map(category => {
+//                                             const IconComponent = getDomainIcon(category === 'all' ? 'all' : category);
+//                                             return (
+//                                                 <button
+//                                                     key={category}
+//                                                     onClick={() => setSelectedCategory(category)}
+//                                                     className={`w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center gap-2 ${
+//                                                         selectedCategory === category
+//                                                             ? 'bg-cyan-500/20 text-cyan-400'
+//                                                             : 'text-slate-300 hover:bg-slate-700/50'
+//                                                     }`}
+//                                                 >
+//                                                     <IconComponent className="w-4 h-4" />
+//                                                     {category === 'all' ? 'All Datasets' : category.replace('_', ' ')}
+//                                                     <span className="ml-auto text-xs text-slate-500">
+//                                                         {category === 'all' ? datasets.length : datasets.filter(d => d.domain === category).length}
+//                                                     </span>
+//                                                 </button>
+//                                             );
+//                                         })}
+//                                     </div>
+//                                 </div>
+
+//                                 {/* Access Level Filter */}
+//                                 <div>
+//                                     <h3 className="text-white font-medium mb-3">Access Level</h3>
+//                                     <div className="space-y-2">
+//                                         {['public', 'restricted'].map(access => (
+//                                             <label key={access} className="flex items-center gap-2 text-slate-300 cursor-pointer">
+//                                                 <input
+//                                                     type="checkbox"
+//                                                     checked={activeFilters.access.includes(access)}
+//                                                     onChange={() => toggleFilter('access', access)}
+//                                                     className="rounded border-slate-600 bg-slate-700 text-cyan-500"
+//                                                 />
+//                                                 <span className="flex items-center gap-1">
+//                                                     {access === 'public' ? <Unlock className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
+//                                                     {access === 'public' ? 'Public Access' : 'Restricted'}
+//                                                 </span>
+//                                             </label>
+//                                         ))}
+//                                     </div>
+//                                 </div>
+
+//                                 {/* Dataset Status */}
+                               
+
+//                                 {/* Clear Filters */}
+//                                 <button
+//                                     onClick={clearAllFilters}
+//                                     className="w-full px-3 py-2 text-slate-400 hover:text-cyan-400 transition-colors text-sm border border-slate-700 rounded-lg hover:border-cyan-400/30"
+//                                 >
+//                                     Clear All Filters
+//                                 </button>
+
+//                                 {/* Results Summary */}
+//                                 <div className="pt-4 border-t border-slate-700">
+//                                     <div className="text-sm text-slate-400">
+//                                         Showing {filteredDatasets.length} of {datasets.length} datasets
+//                                         {selectedDatasets.length > 0 && (
+//                                             <span className="text-cyan-400 ml-1">
+//                                                 ({selectedDatasets.length} selected)
+//                                             </span>
+//                                         )}
+//                                     </div>
+//                                 </div>
+//                             </div>
+//                         </div>
+
+//                         {/* Main Content Area */}
+//                         <div className="flex-1">
+//                             {/* Action Bar */}
+//                             <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 mb-6">
+//                                 <div className="flex items-center justify-between">
+//                                     <div className="flex items-center gap-4">
+//                                         <button
+//                                             onClick={handleSelectAll}
+//                                             className="px-4 py-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors"
+//                                         >
+//                                             {selectedDatasets.length === filteredDatasets.length ? 'Deselect All' : 'Select All'}
+//                                         </button>
+                                        
+//                                         <select 
+//                                             value={sortBy}
+//                                             onChange={(e) => handleSort(e.target.value)}
+//                                             className="bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:border-cyan-400 transition-colors"
+//                                         >
+//                                             <option value="name">Sort by Name</option>
+//                                             <option value="lastUpdated">Sort by Recent</option>
+//                                             <option value="quality">Sort by Quality</option>
+//                                             <option value="size">Sort by Size</option>
+//                                         </select>
+
+//                                         <div className="flex items-center gap-2 text-slate-400 text-sm">
+//                                             <span>Sort:</span>
+//                                             <button
+//                                                 onClick={() => handleSort(sortBy)}
+//                                                 className="p-1 hover:text-cyan-400 transition-colors"
+//                                             >
+//                                                 {sortDirection === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+//                                             </button>
+//                                         </div>
+//                                     </div>
+
+//                                     <div className="flex items-center gap-3">
+//                                         <button 
+//                                             onClick={() => handleDownload()}
+//                                             disabled={selectedDatasets.length === 0 || isLoading}
+//                                             className="px-4 py-2 bg-cyan-500/20 text-cyan-300 rounded-lg hover:bg-cyan-500/30 transition-colors disabled:opacity-50 flex items-center gap-2"
+//                                         >
+//                                             {isLoading ? (
+//                                                 <RefreshCw className="w-4 h-4 animate-spin" />
+//                                             ) : (
+//                                                 <DownloadCloud className="w-4 h-4" />
+//                                             )}
+//                                             Download Selected ({selectedDatasets.length})
+//                                         </button>
+                                        
+//                                         <button 
+//                                             onClick={() => addNotification('Settings panel opened', 'info')}
+//                                             className="p-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors"
+//                                         >
+//                                             <Settings className="w-4 h-4" />
+//                                         </button>
+//                                     </div>
+//                                 </div>
+//                             </div>
+
+//                             {/* Dataset Grid */}
+//                             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+//                                 {filteredDatasets.map(dataset => {
+//                                     const IconComponent = dataset.icon;
+//                                     const progress = downloadProgress[dataset.id] || 0;
+                                    
+//                                     return (
+//                                         <div key={dataset.id} className="bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 hover:border-slate-600/50 transition-all duration-300 hover:transform hover:scale-105 group">
+//                                             {/* Download Progress Bar */}
+//                                             {progress > 0 && progress < 100 && (
+//                                                 <div className="mb-4">
+//                                                     <div className="flex justify-between text-xs text-slate-400 mb-1">
+//                                                         <span>Downloading...</span>
+//                                                         <span>{Math.round(progress)}%</span>
+//                                                     </div>
+//                                                     <div className="w-full bg-slate-700 rounded-full h-2">
+//                                                         <div 
+//                                                             className="bg-cyan-500 h-2 rounded-full transition-all duration-300"
+//                                                             style={{ width: `${progress}%` }}
+//                                                         ></div>
+//                                                     </div>
+//                                                 </div>
+//                                             )}
+
+//                                             <div className="flex items-start justify-between mb-4">
+//                                                 <div className={`p-3 rounded-xl ${getBgColor(dataset.color)}`}>
+//                                                     <IconComponent className={`w-6 h-6 ${getIconColor(dataset.color)}`} />
+//                                                 </div>
+//                                                 <div className="flex items-center gap-2">
+//                                                     <input
+//                                                         type="checkbox"
+//                                                         checked={selectedDatasets.includes(dataset.id)}
+//                                                         onChange={() => handleDatasetSelect(dataset.id)}
+//                                                         className="rounded border-slate-600 bg-slate-700 text-cyan-500"
+//                                                     />
+//                                                     {dataset.access === 'restricted' && (
+//                                                         <Lock className="w-4 h-4 text-amber-400" />
+//                                                     )}
+//                                                     {progress === 100 && (
+//                                                         <CheckCircle className="w-4 h-4 text-emerald-400" />
+//                                                     )}
+//                                                 </div>
+//                                             </div>
+
+//                                             <h3 className="text-white font-semibold mb-2 line-clamp-2 group-hover:text-cyan-300 transition-colors">{dataset.name}</h3>
+//                                             <p className="text-slate-400 text-sm mb-4 line-clamp-2">{dataset.description}</p>
+
+//                                             {/* Tags */}
+//                                             <div className="flex flex-wrap gap-1 mb-4">
+//                                                 {dataset.tags.map((tag, index) => (
+//                                                     <span key={index} className="px-2 py-1 bg-slate-700/50 text-slate-300 rounded-md text-xs">
+//                                                         {tag}
+//                                                     </span>
+//                                                 ))}
+//                                             </div>
+
+//                                             <div className="space-y-3 mb-4">
+//                                                 <div className="flex items-center justify-between text-sm">
+//                                                     <span className="text-slate-500">Format:</span>
+//                                                     <span className="text-slate-300">{dataset.format}</span>
+//                                                 </div>
+//                                                 <div className="flex items-center justify-between text-sm">
+//                                                     <span className="text-slate-500">Size:</span>
+//                                                     <span className="text-slate-300">{dataset.size}</span>
+//                                                 </div>
+//                                                 <div className="flex items-center justify-between text-sm">
+//                                                     <span className="text-slate-500">Time Range:</span>
+//                                                     <span className="text-slate-300">{dataset.timeRange}</span>
+//                                                 </div>
+//                                                 <div className="flex items-center justify-between text-sm">
+//                                                     <span className="text-slate-500">Quality:</span>
+//                                                     <div className="flex items-center gap-2">
+//                                                         <div className="w-16 bg-slate-700 rounded-full h-1.5">
+//                                                             <div 
+//                                                                 className="bg-emerald-500 h-1.5 rounded-full"
+//                                                                 style={{ width: `${dataset.quality}%` }}
+//                                                             ></div>
+//                                                         </div>
+//                                                         <span className="text-slate-300">{dataset.quality}%</span>
+//                                                     </div>
+//                                                 </div>
+//                                             </div>
+
+//                                             <div className="flex items-center justify-between pt-4 border-t border-slate-700">
+//                                                 <button
+//                                                     onClick={() => handlePreview(dataset)}
+//                                                     className="flex items-center gap-2 px-3 py-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors text-sm"
+//                                                 >
+//                                                     <Eye className="w-4 h-4" />
+//                                                     Preview
+//                                                 </button>
+//                                                 <button
+//                                                     onClick={() => handleDownload(dataset)}
+//                                                     disabled={dataset.access === 'restricted' || isLoading}
+//                                                     className="flex items-center gap-2 px-3 py-2 bg-cyan-500/20 text-cyan-300 rounded-lg hover:bg-cyan-500/30 transition-colors disabled:opacity-50 text-sm"
+//                                                 >
+//                                                     <Download className="w-4 h-4" />
+//                                                     {dataset.access === 'restricted' ? 'Request Access' : 'Download'}
+//                                                 </button>
+//                                             </div>
+//                                         </div>
+//                                     );
+//                                 })}
+//                             </div>
+
+//                             {filteredDatasets.length === 0 && (
+//                                 <div className="text-center py-12">
+//                                     <Database className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+//                                     <p className="text-slate-400">No datasets found matching your criteria.</p>
+//                                     <button 
+//                                         onClick={clearAllFilters}
+//                                         className="mt-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+//                                     >
+//                                         Clear all filters
+//                                     </button>
+//                                 </div>
+//                             )}
+//                         </div>
+//                     </div>
+//                 </div>
+//             </div>
+
+//             {/* Dataset Preview Modal */}
+//             {previewDataset && (
+//                 <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={() => setPreviewDataset(null)}>
+//                     <div className="bg-slate-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700" onClick={(e) => e.stopPropagation()}>
+//                         <div className="flex items-center justify-between p-6 border-b border-slate-700 sticky top-0 bg-slate-800">
+//                             <div className="flex items-center gap-3">
+//                                 <div className={`p-2 rounded-lg ${getBgColor(previewDataset.color)}`}>
+//                                     {React.createElement(previewDataset.icon, { className: `w-5 h-5 ${getIconColor(previewDataset.color)}` })}
+//                                 </div>
+//                                 <div>
+//                                     <h3 className="text-white font-semibold text-lg">{previewDataset.name}</h3>
+//                                     <p className="text-slate-400 text-sm">{previewDataset.type} • {previewDataset.domain.replace('_', ' ')}</p>
+//                                 </div>
+//                             </div>
+//                             <button 
+//                                 onClick={() => setPreviewDataset(null)}
+//                                 className="text-slate-400 hover:text-white transition-colors"
+//                             >
+//                                 <X className="w-6 h-6" />
+//                             </button>
+//                         </div>
+                        
+//                         <div className="p-6">
+//                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+//                                 <div>
+//                                     <h4 className="text-white font-medium mb-3">Dataset Overview</h4>
+//                                     <div className="space-y-3">
+//                                         <div className="flex justify-between">
+//                                             <span className="text-slate-400">Description:</span>
+//                                             <span className="text-slate-300 text-right">{previewDataset.description}</span>
+//                                         </div>
+//                                         <div className="flex justify-between">
+//                                             <span className="text-slate-400">Institution:</span>
+//                                             <span className="text-slate-300">{previewDataset.institution}</span>
+//                                         </div>
+//                                         <div className="flex justify-between">
+//                                             <span className="text-slate-400">License:</span>
+//                                             <span className="text-slate-300">{previewDataset.license}</span>
+//                                         </div>
+//                                         <div className="flex justify-between">
+//                                             <span className="text-slate-400">Last Updated:</span>
+//                                             <span className="text-slate-300">{previewDataset.lastUpdated}</span>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+                                
+//                                 <div>
+//                                     <h4 className="text-white font-medium mb-3">Technical Details</h4>
+//                                     <div className="space-y-3">
+//                                         <div className="flex justify-between">
+//                                             <span className="text-slate-400">Sample Size:</span>
+//                                             <span className="text-slate-300">{previewDataset.sampleSize}</span>
+//                                         </div>
+//                                         <div className="flex justify-between">
+//                                             <span className="text-slate-400">Frequency:</span>
+//                                             <span className="text-slate-300">{previewDataset.frequency}</span>
+//                                         </div>
+//                                         <div className="flex justify-between">
+//                                             <span className="text-slate-400">Data Quality:</span>
+//                                             <span className="text-slate-300">{previewDataset.quality}%</span>
+//                                         </div>
+//                                         <div className="flex justify-between">
+//                                             <span className="text-slate-400">API Endpoint:</span>
+//                                             <span className="text-slate-300 font-mono text-sm">{previewDataset.apiEndpoint}</span>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                             </div>
+                            
+//                             {/* Sample Data Preview */}
+//                             <div className="mb-6">
+//                                 <h4 className="text-white font-medium mb-3">Sample Data Preview</h4>
+//                                 <div className="bg-slate-900/50 rounded-lg p-4">
+//                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+//                                         {previewDataset.sampleData.slice(0, 3).map((sample, index) => (
+//                                             <div key={index} className="bg-slate-800/30 rounded-lg p-3">
+//                                                 {Object.entries(sample).map(([key, value]) => (
+//                                                     <div key={key} className="flex justify-between text-sm mb-1">
+//                                                         <span className="text-slate-400 capitalize">{key}:</span>
+//                                                         <span className="text-slate-300">{value}</span>
+//                                                     </div>
+//                                                 ))}
+//                                             </div>
+//                                         ))}
+//                                     </div>
+//                                 </div>
+//                             </div>
+                            
+//                             <div className="mb-6">
+//                                 <h4 className="text-white font-medium mb-3">Variables & Parameters</h4>
+//                                 <div className="flex flex-wrap gap-2">
+//                                     {previewDataset.variables.map((variable, index) => (
+//                                         <span key={index} className="px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm">
+//                                             {variable}
+//                                         </span>
+//                                     ))}
+//                                 </div>
+//                             </div>
+                            
+//                             <div className="flex gap-3">
+//                                 <button
+//                                     onClick={() => handleDownload(previewDataset)}
+//                                     disabled={previewDataset.access === 'restricted' || isLoading}
+//                                     className="flex-1 px-4 py-3 bg-cyan-500/20 text-cyan-300 rounded-lg hover:bg-cyan-500/30 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+//                                 >
+//                                     <Download className="w-5 h-5" />
+//                                     {previewDataset.access === 'restricted' ? 'Request Access' : 'Download Dataset'}
+//                                 </button>
+//                                 <button 
+//                                     onClick={() => addNotification('API documentation opened', 'info')}
+//                                     className="px-4 py-3 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors flex items-center gap-2"
+//                                 >
+//                                     <ExternalLink className="w-5 h-5" />
+//                                     API Documentation
+//                                 </button>
+//                             </div>
+//                         </div>
+//                     </div>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// }
+
 import React, { useState, useEffect } from 'react';
 import { 
     Search, Database, Waves, Fish, Dna, Globe, Download, Filter, 
@@ -1388,14 +2297,12 @@ import {
     Lock, Unlock, BarChart3, TrendingUp, ExternalLink, Play,
     ChevronDown, ChevronUp, Info, DownloadCloud, Server, Clock,
     Users, Shield, Zap, Layers, Map, PieChart, Activity, Thermometer,
-    Navigation, Wind, Cloud, AlertCircle, CheckCircle, X
+    Navigation, Wind, Cloud, AlertCircle, CheckCircle, X, FileJson,
+    FileSpreadsheet, Archive, Image, Code, Loader
 } from 'lucide-react';
-import Navbar from '../components/Navbar';
-import VarunAIAgent from '../components/VarunAIAgent';
 
 export default function DataHub() {
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [isVarunOpen, setIsVarunOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedDatasets, setSelectedDatasets] = useState([]);
     const [sortBy, setSortBy] = useState('name');
@@ -1407,11 +2314,11 @@ export default function DataHub() {
         format: [],
         status: []
     });
-    const [isLoading, setIsLoading] = useState(false);
-    const [downloadProgress, setDownloadProgress] = useState({});
+    const [downloadQueue, setDownloadQueue] = useState({});
     const [notifications, setNotifications] = useState([]);
+    const [isGeneratingFile, setIsGeneratingFile] = useState(false);
 
-    // Enhanced dataset catalog with rich metadata and sample data
+    // Enhanced dataset catalog with downloadable content
     const datasets = [
         {
             id: 'oce-001',
@@ -1419,8 +2326,8 @@ export default function DataHub() {
             type: 'Oceanographic',
             domain: 'oceanography',
             description: 'High-resolution temperature measurements from Arabian Sea buoys and ARGO floats with depth profiles and seasonal variations',
-            format: 'NetCDF',
-            size: '2.4 GB',
+            format: 'CSV',
+            size: '2.4 MB',
             timeRange: '2018-2024',
             frequency: 'Daily',
             access: 'public',
@@ -1430,17 +2337,18 @@ export default function DataHub() {
             institution: 'National Institute of Oceanography',
             license: 'CC BY 4.0',
             lastUpdated: '2024-04-26',
-            sampleSize: '15M records',
+            sampleSize: '15K records',
             previewAvailable: true,
             apiEndpoint: '/api/datasets/oce-001',
             icon: Thermometer,
             color: 'cyan',
             tags: ['real-time', 'climate', 'monitoring'],
             sampleData: [
-                { depth: '0m', temp: 28.5, salinity: 35.2, pressure: 1013 },
-                { depth: '10m', temp: 27.8, salinity: 35.3, pressure: 1023 },
-                { depth: '50m', temp: 25.2, salinity: 35.5, pressure: 1523 },
-                { depth: '100m', temp: 22.1, salinity: 35.8, pressure: 2033 }
+                { depth: '0m', temp: 28.5, salinity: 35.2, pressure: 1013, timestamp: '2024-04-26T08:00:00Z' },
+                { depth: '10m', temp: 27.8, salinity: 35.3, pressure: 1023, timestamp: '2024-04-26T08:00:00Z' },
+                { depth: '50m', temp: 25.2, salinity: 35.5, pressure: 1523, timestamp: '2024-04-26T08:00:00Z' },
+                { depth: '100m', temp: 22.1, salinity: 35.8, pressure: 2033, timestamp: '2024-04-26T08:00:00Z' },
+                { depth: '200m', temp: 18.9, salinity: 36.1, pressure: 3033, timestamp: '2024-04-26T08:00:00Z' }
             ]
         },
         {
@@ -1449,8 +2357,8 @@ export default function DataHub() {
             type: 'Fisheries',
             domain: 'fisheries',
             description: 'Commercial fishing catch data with species identification, vessel tracking, and environmental conditions',
-            format: 'CSV',
-            size: '850 MB',
+            format: 'JSON',
+            size: '850 KB',
             timeRange: '2020-2024',
             frequency: 'Monthly',
             access: 'restricted',
@@ -1460,16 +2368,17 @@ export default function DataHub() {
             institution: 'Fisheries Survey of India',
             license: 'Restricted - Requires Approval',
             lastUpdated: '2024-04-25',
-            sampleSize: '2.4M records',
+            sampleSize: '2.4K records',
             previewAvailable: true,
             apiEndpoint: '/api/datasets/fish-002',
             icon: Fish,
             color: 'emerald',
             tags: ['commercial', 'species', 'tracking'],
             sampleData: [
-                { species: 'Tuna', weight: 2450, vessel: 'IND-FV-001', location: '12.5N, 73.2E' },
-                { species: 'Mackerel', weight: 1800, vessel: 'IND-FV-003', location: '11.8N, 72.9E' },
-                { species: 'Sardine', weight: 3200, vessel: 'IND-FV-007', location: '13.1N, 73.5E' }
+                { species: 'Yellowfin Tuna', weight: 2450, vessel: 'IND-FV-001', location: '12.5N, 73.2E', timestamp: '2024-04-01', gear: 'longline' },
+                { species: 'Indian Mackerel', weight: 1800, vessel: 'IND-FV-003', location: '11.8N, 72.9E', timestamp: '2024-04-01', gear: 'purse_seine' },
+                { species: 'Oil Sardine', weight: 3200, vessel: 'IND-FV-007', location: '13.1N, 73.5E', timestamp: '2024-04-01', gear: 'ring_net' },
+                { species: 'Pomfret', weight: 890, vessel: 'IND-FV-012', location: '14.2N, 74.1E', timestamp: '2024-04-01', gear: 'trawl' }
             ]
         },
         {
@@ -1479,7 +2388,7 @@ export default function DataHub() {
             domain: 'molecular',
             description: 'Environmental DNA sequencing data for marine biodiversity assessment and species detection',
             format: 'FASTA',
-            size: '15.2 GB',
+            size: '1.2 MB',
             timeRange: '2023-2024',
             frequency: 'Quarterly',
             access: 'public',
@@ -1489,16 +2398,17 @@ export default function DataHub() {
             institution: 'CSIR-NIO',
             license: 'CC BY-NC 4.0',
             lastUpdated: '2024-04-24',
-            sampleSize: '45,000 sequences',
+            sampleSize: '450 sequences',
             previewAvailable: true,
             apiEndpoint: '/api/datasets/edna-003',
             icon: Dna,
             color: 'violet',
             tags: ['biodiversity', 'sequencing', 'conservation'],
             sampleData: [
-                { species: 'Acropora muricata', confidence: 0.98, location: '11.7N, 72.2E' },
-                { species: 'Thunnus albacares', confidence: 0.95, location: '11.6N, 72.3E' },
-                { species: 'Dugong dugon', confidence: 0.92, location: '11.8N, 72.1E' }
+                { species: 'Acropora muricata', confidence: 0.98, location: '11.7N, 72.2E', sequence_length: 658, sample_id: 'LK001' },
+                { species: 'Thunnus albacares', confidence: 0.95, location: '11.6N, 72.3E', sequence_length: 702, sample_id: 'LK002' },
+                { species: 'Dugong dugon', confidence: 0.92, location: '11.8N, 72.1E', sequence_length: 634, sample_id: 'LK003' },
+                { species: 'Chelonia mydas', confidence: 0.89, location: '11.5N, 72.4E', sequence_length: 681, sample_id: 'LK004' }
             ]
         },
         {
@@ -1507,8 +2417,8 @@ export default function DataHub() {
             type: 'Imagery',
             domain: 'remote_sensing',
             description: 'High-resolution satellite imagery for coral reef monitoring, bleaching detection, and habitat mapping',
-            format: 'GeoTIFF',
-            size: '45.8 GB',
+            format: 'ZIP',
+            size: '4.8 MB',
             timeRange: '2022-2024',
             frequency: 'Weekly',
             access: 'public',
@@ -1518,163 +2428,282 @@ export default function DataHub() {
             institution: 'ISRO',
             license: 'Open Data',
             lastUpdated: '2024-04-23',
-            sampleSize: '1,200 images',
+            sampleSize: '120 images',
             previewAvailable: true,
             apiEndpoint: '/api/datasets/img-004',
             icon: Map,
             color: 'amber',
             tags: ['satellite', 'monitoring', 'habitat'],
             sampleData: [
-                { date: '2024-04-01', area: 'North Reef', health: 85, chlorophyll: 0.32 },
-                { date: '2024-04-08', area: 'South Reef', health: 78, chlorophyll: 0.45 },
-                { date: '2024-04-15', area: 'East Atoll', health: 92, chlorophyll: 0.28 }
+                { date: '2024-04-01', area: 'North Reef', health: 85, chlorophyll: 0.32, ndvi: 0.45, lat: 9.15, lon: 79.12 },
+                { date: '2024-04-08', area: 'South Reef', health: 78, chlorophyll: 0.45, ndvi: 0.52, lat: 8.95, lon: 78.98 },
+                { date: '2024-04-15', area: 'East Atoll', health: 92, chlorophyll: 0.28, ndvi: 0.48, lat: 9.25, lon: 79.28 },
+                { date: '2024-04-22', area: 'West Bank', health: 67, chlorophyll: 0.58, ndvi: 0.41, lat: 8.88, lon: 78.75 }
             ]
         },
         {
-            id: 'tax-005',
-            name: 'Marine Species Taxonomy Database',
-            type: 'Taxonomy',
-            domain: 'biodiversity',
-            description: 'Comprehensive taxonomic database of marine species with phylogenetic relationships and distribution data',
-            format: 'JSON',
-            size: '320 MB',
-            timeRange: '1758-2024',
-            frequency: 'Annual',
-            access: 'public',
-            quality: 99.1,
-            variables: ['species', 'classification', 'distribution', 'conservation_status', 'habitat'],
-            location: 'Global',
-            institution: 'WoRMS',
-            license: 'CC0 1.0',
-            lastUpdated: '2024-04-22',
-            sampleSize: '240,000 species',
-            previewAvailable: true,
-            apiEndpoint: '/api/datasets/tax-005',
-            icon: Users,
-            color: 'blue',
-            tags: ['taxonomy', 'phylogeny', 'global'],
-            sampleData: [
-                { species: 'Carcharodon carcharias', family: 'Lamnidae', status: 'Vulnerable' },
-                { species: 'Chelonia mydas', family: 'Cheloniidae', status: 'Endangered' },
-                { species: 'Manta birostris', family: 'Mobulidae', status: 'Vulnerable' }
-            ]
-        },
-        {
-            id: 'wave-006',
-            name: 'Coastal Wave Height Monitoring',
-            type: 'Wave Data',
-            domain: 'oceanography',
-            description: 'Real-time wave height and direction data from coastal monitoring stations and buoys',
+            id: 'whale-005',
+            name: 'Whale Shark Movement Data',
+            type: 'Telemetry',
+            domain: 'marine_biology',
+            description: 'Satellite tracking data from tagged whale sharks showing migration patterns and diving behavior',
             format: 'CSV',
-            size: '1.2 GB',
-            timeRange: '2023-2024',
+            size: '3.1 MB',
+            timeRange: '2019-2024',
             frequency: 'Hourly',
-            access: 'restricted',
-            quality: 94.7,
-            variables: ['wave_height', 'wave_period', 'direction', 'water_level', 'timestamp'],
-            location: 'Indian Coastline',
-            institution: 'INCOIS',
-            license: 'Research Use Only',
-            lastUpdated: '2024-04-26',
-            sampleSize: '8.7M records',
-            previewAvailable: false,
-            apiEndpoint: '/api/datasets/wave-006',
-            icon: TrendingUp,
-            color: 'indigo',
-            tags: ['real-time', 'coastal', 'safety'],
-            sampleData: [
-                { station: 'GOA-001', height: 2.3, period: 8.5, direction: 145 },
-                { station: 'KER-002', height: 1.8, period: 7.2, direction: 120 },
-                { station: 'TN-003', height: 2.1, period: 9.1, direction: 135 }
-            ]
-        },
-        {
-            id: 'curr-007',
-            name: 'Ocean Current Patterns',
-            type: 'Current Data',
-            domain: 'oceanography',
-            description: 'Surface and subsurface current velocity data from ADCP measurements and satellite altimetry',
-            format: 'NetCDF',
-            size: '3.1 GB',
-            timeRange: '2021-2024',
-            frequency: '6-hourly',
             access: 'public',
-            quality: 96.8,
-            variables: ['u_velocity', 'v_velocity', 'depth', 'timestamp', 'quality_flag'],
-            location: 'Bay of Bengal',
-            institution: 'NIOT',
+            quality: 94.7,
+            variables: ['shark_id', 'latitude', 'longitude', 'depth', 'temperature', 'timestamp'],
+            location: 'Indian Ocean',
+            institution: 'Wildlife Conservation Society',
             license: 'CC BY 4.0',
             lastUpdated: '2024-04-20',
-            sampleSize: '12.5M records',
+            sampleSize: '8.2K records',
             previewAvailable: true,
-            apiEndpoint: '/api/datasets/curr-007',
-            icon: Navigation,
-            color: 'cyan',
-            tags: ['currents', 'velocity', 'circulation'],
+            apiEndpoint: '/api/datasets/whale-005',
+            icon: Fish,
+            color: 'blue',
+            tags: ['migration', 'conservation', 'telemetry'],
             sampleData: [
-                { depth: '0m', u_vel: 0.45, v_vel: 0.32, speed: 0.55 },
-                { depth: '50m', u_vel: 0.32, v_vel: 0.28, speed: 0.43 },
-                { depth: '100m', u_vel: 0.18, v_vel: 0.15, speed: 0.23 }
+                { shark_id: 'WS001', latitude: 18.92, longitude: 72.83, depth: 15.2, temperature: 28.5, timestamp: '2024-04-20T06:00:00Z' },
+                { shark_id: 'WS001', latitude: 18.94, longitude: 72.85, depth: 22.8, temperature: 27.9, timestamp: '2024-04-20T07:00:00Z' },
+                { shark_id: 'WS002', latitude: 9.93, longitude: 76.27, depth: 8.5, temperature: 29.1, timestamp: '2024-04-20T06:00:00Z' },
+                { shark_id: 'WS002', latitude: 9.95, longitude: 76.29, depth: 12.3, temperature: 28.8, timestamp: '2024-04-20T07:00:00Z' }
             ]
         },
         {
-            id: 'qual-008',
-            name: 'Coastal Water Quality',
-            type: 'Water Quality',
-            domain: 'environmental',
-            description: 'Comprehensive water quality parameters including nutrients, pollutants, and biological indicators',
-            format: 'CSV',
-            size: '650 MB',
+            id: 'water-006',
+            name: 'Water Quality Monitoring Data',
+            type: 'Environmental',
+            domain: 'water_quality',
+            description: 'Multi-parameter water quality measurements from coastal monitoring stations',
+            format: 'JSON',
+            size: '1.8 MB',
             timeRange: '2020-2024',
-            frequency: 'Monthly',
+            frequency: 'Daily',
             access: 'public',
-            quality: 93.4,
-            variables: ['ph', 'do', 'nutrients', 'turbidity', 'heavy_metals'],
-            location: 'Coastal India',
-            institution: 'CPCB',
+            quality: 96.8,
+            variables: ['ph', 'dissolved_oxygen', 'turbidity', 'nitrates', 'phosphates', 'coliform'],
+            location: 'West Coast Monitoring Stations',
+            institution: 'Central Pollution Control Board',
             license: 'Open Government Data',
-            lastUpdated: '2024-04-18',
-            sampleSize: '1.8M records',
+            lastUpdated: '2024-04-19',
+            sampleSize: '12K records',
             previewAvailable: true,
-            apiEndpoint: '/api/datasets/qual-008',
-            icon: Activity,
-            color: 'emerald',
-            tags: ['quality', 'pollution', 'monitoring'],
+            apiEndpoint: '/api/datasets/water-006',
+            icon: Waves,
+            color: 'indigo',
+            tags: ['pollution', 'monitoring', 'quality'],
             sampleData: [
-                { location: 'Mumbai Coast', ph: 7.8, do: 6.2, turbidity: 12.5 },
-                { location: 'Chennai Coast', ph: 8.1, do: 5.8, turbidity: 15.2 },
-                { location: 'Kolkata Coast', ph: 7.9, do: 6.0, turbidity: 18.7 }
+                { station: 'MUM01', ph: 8.1, dissolved_oxygen: 6.8, turbidity: 4.2, nitrates: 0.15, phosphates: 0.08, date: '2024-04-19' },
+                { station: 'GOA01', ph: 8.3, dissolved_oxygen: 7.2, turbidity: 2.8, nitrates: 0.12, phosphates: 0.06, date: '2024-04-19' },
+                { station: 'KOC01', ph: 8.0, dissolved_oxygen: 6.5, turbidity: 5.1, nitrates: 0.18, phosphates: 0.09, date: '2024-04-19' },
+                { station: 'CHE01', ph: 7.9, dissolved_oxygen: 6.9, turbidity: 3.5, nitrates: 0.14, phosphates: 0.07, date: '2024-04-19' }
             ]
         }
     ];
 
+    // Generate realistic file content based on dataset format
+    const generateFileContent = (dataset) => {
+        const generateMoreData = (sampleData, targetSize = 100) => {
+            const expandedData = [...sampleData];
+            while (expandedData.length < targetSize) {
+                const randomSample = { ...sampleData[Math.floor(Math.random() * sampleData.length)] };
+                
+                // Add some variation to the data
+                Object.keys(randomSample).forEach(key => {
+                    if (typeof randomSample[key] === 'number') {
+                        const variation = (Math.random() - 0.5) * 0.1 * randomSample[key];
+                        randomSample[key] = Number((randomSample[key] + variation).toFixed(2));
+                    } else if (key === 'timestamp' || key === 'date') {
+                        const date = new Date(randomSample[key]);
+                        date.setDate(date.getDate() + Math.floor(Math.random() * 30));
+                        randomSample[key] = date.toISOString();
+                    } else if (key.includes('id') || key === 'station') {
+                        const num = Math.floor(Math.random() * 999) + 1;
+                        randomSample[key] = randomSample[key].replace(/\d+/, num.toString().padStart(3, '0'));
+                    }
+                });
+                
+                expandedData.push(randomSample);
+            }
+            return expandedData;
+        };
+
+        const expandedData = generateMoreData(dataset.sampleData, 50);
+
+        switch (dataset.format.toLowerCase()) {
+            case 'csv':
+                const headers = Object.keys(expandedData[0]).join(',');
+                const rows = expandedData.map(row => 
+                    Object.values(row).map(val => typeof val === 'string' && val.includes(',') ? `"${val}"` : val).join(',')
+                ).join('\n');
+                return `# ${dataset.name}\n# Generated on: ${new Date().toISOString()}\n# Institution: ${dataset.institution}\n# License: ${dataset.license}\n${headers}\n${rows}`;
+            
+            case 'json':
+                return JSON.stringify({
+                    metadata: {
+                        name: dataset.name,
+                        description: dataset.description,
+                        institution: dataset.institution,
+                        license: dataset.license,
+                        lastUpdated: dataset.lastUpdated,
+                        variables: dataset.variables,
+                        format: dataset.format,
+                        timeRange: dataset.timeRange,
+                        location: dataset.location,
+                        quality: dataset.quality,
+                        generated: new Date().toISOString()
+                    },
+                    count: expandedData.length,
+                    data: expandedData
+                }, null, 2);
+            
+            case 'fasta':
+                const sequences = [
+                    'ATCGATCGATCGATCGATCGATCGATCGATCGATCG',
+                    'GCTAGCTAGCTAGCTAGCTAGCTAGCTAGCTAGCT',
+                    'TTAACCGGTTAACCGGTTAACCGGTTAACCGGTT',
+                    'CGGAATCCGGAATCCGGAATCCGGAATCCGGAAT'
+                ];
+                return expandedData.map((item, index) => {
+                    const baseSeq = sequences[index % sequences.length];
+                    const seqLength = item.sequence_length || 650;
+                    const sequence = baseSeq.repeat(Math.ceil(seqLength / baseSeq.length)).substring(0, seqLength);
+                    return `>sequence_${index + 1}|${item.species || 'Unknown'}|confidence:${item.confidence || 0.95}|sample:${item.sample_id || `S${index + 1}`}\n${sequence}`;
+                }).join('\n');
+            
+            case 'zip':
+                // For ZIP files, create a metadata file content
+                return JSON.stringify({
+                    archive_info: {
+                        name: dataset.name,
+                        description: "This would be a ZIP archive containing multiple files",
+                        contents: [
+                            "imagery_metadata.csv",
+                            "processing_parameters.json",
+                            "quality_control_report.txt",
+                            "sample_images/"
+                        ],
+                        total_files: 120,
+                        compressed_size: dataset.size
+                    },
+                    sample_metadata: expandedData
+                }, null, 2);
+            
+            default:
+                return JSON.stringify({
+                    dataset_info: dataset,
+                    sample_data: expandedData,
+                    generated_at: new Date().toISOString()
+                }, null, 2);
+        }
+    };
+
+    // Real download function
+    const downloadFile = async (dataset) => {
+        if (dataset.access === 'restricted') {
+            addNotification(`Access requested for: ${dataset.name}. Please contact administrator for approval.`, 'warning');
+            return;
+        }
+
+        setIsGeneratingFile(true);
+        setDownloadQueue(prev => ({ ...prev, [dataset.id]: { progress: 0, status: 'preparing' } }));
+
+        try {
+            // Simulate file generation with realistic progress
+            const steps = ['Querying database...', 'Processing data...', 'Generating file...', 'Finalizing...'];
+            
+            for (let i = 0; i <= 100; i += 5) {
+                await new Promise(resolve => setTimeout(resolve, 50));
+                const stepIndex = Math.floor((i / 100) * steps.length);
+                const status = i === 100 ? 'complete' : steps[stepIndex] || 'processing';
+                
+                setDownloadQueue(prev => ({ 
+                    ...prev, 
+                    [dataset.id]: { progress: i, status } 
+                }));
+            }
+
+            // Generate file content
+            const content = generateFileContent(dataset);
+            const mimeTypes = {
+                'csv': 'text/csv',
+                'json': 'application/json',
+                'fasta': 'text/plain',
+                'zip': 'application/json' // Simulated as JSON for demo
+            };
+            
+            const mimeType = mimeTypes[dataset.format.toLowerCase()] || 'text/plain';
+            const fileExtension = dataset.format.toLowerCase() === 'zip' ? 'json' : dataset.format.toLowerCase();
+
+            // Create and download file
+            const blob = new Blob([content], { type: mimeType });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `${dataset.name.toLowerCase().replace(/\s+/g, '_').replace(/[^a-z0-9_]/g, '')}.${fileExtension}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+
+            addNotification(`Successfully downloaded: ${dataset.name} (${content.length} bytes)`, 'success');
+            
+            // Clean up after delay
+            setTimeout(() => {
+                setDownloadQueue(prev => {
+                    const updated = { ...prev };
+                    delete updated[dataset.id];
+                    return updated;
+                });
+            }, 3000);
+
+        } catch (error) {
+            addNotification(`Download failed: ${dataset.name} - ${error.message}`, 'error');
+            setDownloadQueue(prev => {
+                const updated = { ...prev };
+                delete updated[dataset.id];
+                return updated;
+            });
+        } finally {
+            setIsGeneratingFile(false);
+        }
+    };
+
+    // Batch download function
+    const downloadSelectedDatasets = async () => {
+        if (selectedDatasets.length === 0) {
+            addNotification('Please select at least one dataset to download', 'warning');
+            return;
+        }
+
+        const publicDatasets = selectedDatasets
+            .map(id => datasets.find(d => d.id === id))
+            .filter(d => d && d.access === 'public');
+
+        const restrictedCount = selectedDatasets.length - publicDatasets.length;
+
+        if (restrictedCount > 0) {
+            addNotification(`${restrictedCount} restricted dataset(s) require approval. Downloading ${publicDatasets.length} public dataset(s).`, 'info');
+        }
+
+        for (const dataset of publicDatasets) {
+            await downloadFile(dataset);
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Stagger downloads
+        }
+    };
+
     // Add notification
     const addNotification = (message, type = 'info') => {
-        const id = Date.now();
-        const notification = { id, message, type };
-        setNotifications(prev => [...prev, notification]);
+        const id = Date.now() + Math.random();
+        const notification = { id, message, type, timestamp: new Date().toLocaleTimeString() };
+        setNotifications(prev => [notification, ...prev].slice(0, 5)); // Keep only 5 recent notifications
+        
+        // Auto remove after 5 seconds
         setTimeout(() => {
             setNotifications(prev => prev.filter(n => n.id !== id));
         }, 5000);
-    };
-
-    // Simulate download with progress
-    const simulateDownload = (datasetId) => {
-        setIsLoading(true);
-        setDownloadProgress(prev => ({ ...prev, [datasetId]: 0 }));
-        
-        const interval = setInterval(() => {
-            setDownloadProgress(prev => {
-                const newProgress = prev[datasetId] + Math.random() * 15;
-                if (newProgress >= 100) {
-                    clearInterval(interval);
-                    setIsLoading(false);
-                    addNotification(`Download completed: ${datasets.find(d => d.id === datasetId)?.name}`, 'success');
-                    return { ...prev, [datasetId]: 100 };
-                }
-                return { ...prev, [datasetId]: newProgress };
-            });
-        }, 200);
     };
 
     // Filter and sort datasets
@@ -1686,13 +2715,8 @@ export default function DataHub() {
                 !dataset.description.toLowerCase().includes(searchTerm.toLowerCase()) &&
                 !dataset.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))) return false;
             
-            if (activeFilters.domain.length > 0 && !activeFilters.domain.includes(dataset.domain)) return false;
             if (activeFilters.access.length > 0 && !activeFilters.access.includes(dataset.access)) return false;
             if (activeFilters.format.length > 0 && !activeFilters.format.includes(dataset.format)) return false;
-            if (activeFilters.status.length > 0) {
-                if (activeFilters.status.includes('preview') && !dataset.previewAvailable) return false;
-                if (activeFilters.status.includes('recent') && !isRecent(dataset.lastUpdated)) return false;
-            }
             
             return true;
         })
@@ -1705,7 +2729,7 @@ export default function DataHub() {
                 bVal = new Date(bVal);
             }
             
-            if (sortBy === 'quality' || sortBy === 'size') {
+            if (sortBy === 'quality') {
                 aVal = parseFloat(aVal);
                 bVal = parseFloat(bVal);
             }
@@ -1714,12 +2738,6 @@ export default function DataHub() {
             if (aVal > bVal) return sortDirection === 'asc' ? 1 : -1;
             return 0;
         });
-
-    const isRecent = (date) => {
-        const diffTime = Math.abs(new Date() - new Date(date));
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        return diffDays <= 30;
-    };
 
     const handleSort = (field) => {
         if (sortBy === field) {
@@ -1755,29 +2773,6 @@ export default function DataHub() {
         }
     };
 
-    const handlePreview = (dataset) => {
-        setPreviewDataset(dataset);
-        addNotification(`Previewing dataset: ${dataset.name}`, 'info');
-    };
-
-    const handleDownload = async (dataset = null) => {
-        const datasetsToDownload = dataset ? [dataset.id] : selectedDatasets;
-        
-        if (datasetsToDownload.length === 0) {
-            addNotification('Please select at least one dataset to download', 'warning');
-            return;
-        }
-
-        datasetsToDownload.forEach(datasetId => {
-            const dataset = datasets.find(d => d.id === datasetId);
-            if (dataset.access === 'restricted') {
-                addNotification(`Access requested for: ${dataset.name}. Approval required.`, 'warning');
-            } else {
-                simulateDownload(datasetId);
-            }
-        });
-    };
-
     const clearAllFilters = () => {
         setSearchTerm('');
         setSelectedCategory('all');
@@ -1810,51 +2805,50 @@ export default function DataHub() {
         return colors[color] || 'bg-slate-500/20';
     };
 
-    const getDomainIcon = (domain) => {
+    const getFormatIcon = (format) => {
         const icons = {
-            oceanography: Waves,
-            fisheries: Fish,
-            molecular: Dna,
-            remote_sensing: Map,
-            biodiversity: Users,
-            environmental: Activity
+            'CSV': FileSpreadsheet,
+            'JSON': FileJson,
+            'ZIP': Archive,
+            'FASTA': Code,
+            'GeoTIFF': Image
         };
-        return icons[domain] || Database;
+        return icons[format] || FileText;
     };
 
     return (
-        <div className="min-h-100 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-7">
-            <Navbar />
-            <VarunAIAgent 
-                isOpen={isVarunOpen} 
-                onToggle={() => setIsVarunOpen(!isVarunOpen)}
-                currentPage="data_hub"
-            />
-            
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
             {/* Notifications */}
-            <div className="fixed top-20 right-4 z-50 space-y-2">
+            <div className="fixed top-4 right-4 z-50 space-y-2 max-w-sm">
                 {notifications.map(notification => (
                     <div
                         key={notification.id}
-                        className={`flex items-center gap-3 px-4 py-3 rounded-lg border backdrop-blur-sm transition-all duration-300 ${
+                        className={`flex items-start gap-3 px-4 py-3 rounded-lg border backdrop-blur-sm transition-all duration-300 shadow-lg ${
                             notification.type === 'success'
                                 ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-300'
                                 : notification.type === 'warning'
                                 ? 'bg-amber-500/20 border-amber-500/30 text-amber-300'
+                                : notification.type === 'error'
+                                ? 'bg-red-500/20 border-red-500/30 text-red-300'
                                 : 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300'
                         }`}
                     >
                         {notification.type === 'success' ? (
-                            <CheckCircle className="w-4 h-4" />
+                            <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
                         ) : notification.type === 'warning' ? (
-                            <AlertCircle className="w-4 h-4" />
+                            <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                        ) : notification.type === 'error' ? (
+                            <X className="w-4 h-4 mt-0.5 flex-shrink-0" />
                         ) : (
-                            <Info className="w-4 h-4" />
+                            <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
                         )}
-                        <span className="text-sm">{notification.message}</span>
+                        <div className="flex-1">
+                            <div className="text-sm font-medium">{notification.message}</div>
+                            <div className="text-xs opacity-75 mt-1">{notification.timestamp}</div>
+                        </div>
                         <button
                             onClick={() => setNotifications(prev => prev.filter(n => n.id !== notification.id))}
-                            className="text-slate-400 hover:text-white"
+                            className="text-slate-400 hover:text-white ml-2 flex-shrink-0"
                         >
                             <X className="w-3 h-3" />
                         </button>
@@ -1862,306 +2856,316 @@ export default function DataHub() {
                 ))}
             </div>
 
-            <div className="pt-24 px-4">
-                <div className="max-w-7xl mx-auto">
-                    {/* Enhanced Header */}
-                    <div className="mb-8 text-center">
-                        <div className="flex items-center justify-center gap-3 mb-4">
-                            <div className="p-3 bg-cyan-500/20 rounded-2xl">
-                                <Database className="w-8 h-8 text-cyan-400" />
-                            </div>
-                            <h1 className="text-4xl font-bold text-white">Data Hub</h1>
+            <div className="max-w-7xl mx-auto">
+                {/* Enhanced Header */}
+                <div className="mb-8 text-center">
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                        <div className="p-3 bg-cyan-500/20 rounded-2xl">
+                            <Database className="w-8 h-8 text-cyan-400" />
                         </div>
-                        <p className="text-xl text-slate-300 max-w-3xl mx-auto">
-                            Unified Marine Dataset Catalog — Explore metadata, access controls, and preview marine datasets 
-                            (oceanography, eDNA, fisheries, biodiversity, and more)
-                        </p>
-                        <div className="mt-4 flex items-center justify-center gap-4 text-sm text-slate-400">
-                            <div className="flex items-center gap-1">
-                                <Server className="w-4 h-4" />
-                                {datasets.length} curated datasets
+                        <h1 className="text-4xl font-bold text-white">Marine Data Hub</h1>
+                    </div>
+                    <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-4">
+                        Discover, preview, and download marine datasets from oceanography, fisheries, eDNA, and biodiversity research
+                    </p>
+                    <div className="flex items-center justify-center gap-6 text-sm text-slate-400">
+                        <div className="flex items-center gap-2">
+                            <Server className="w-4 h-4" />
+                            {datasets.length} Curated Datasets
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Shield className="w-4 h-4" />
+                            Secure Access
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Download className="w-4 h-4" />
+                            Instant Downloads
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex gap-6">
+                    {/* Filters Sidebar */}
+                    <div className="w-80 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 h-fit sticky top-6">
+                        <div className="mb-6">
+                            <div className="relative">
+                                <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                                <input
+                                    type="text"
+                                    placeholder="Search datasets..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-3 py-2 text-white placeholder-slate-400 focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 transition-colors"
+                                />
                             </div>
-                            <div className="flex items-center gap-1">
-                                <Shield className="w-4 h-4" />
-                                Secure access controls
+                        </div>
+
+                        <div className="space-y-6">
+                            {/* Categories */}
+                            <div>
+                                <h3 className="text-white font-medium mb-3 flex items-center gap-2">
+                                    <Layers className="w-4 h-4" />
+                                    Categories
+                                </h3>
+                                <div className="space-y-1">
+                                    {['all', 'oceanography', 'fisheries', 'molecular', 'remote_sensing', 'marine_biology', 'water_quality'].map(category => (
+                                        <button
+                                            key={category}
+                                            onClick={() => setSelectedCategory(category)}
+                                            className={`w-full text-left px-3 py-2 rounded-lg transition-colors text-sm ${
+                                                selectedCategory === category
+                                                    ? 'bg-cyan-500/20 text-cyan-400'
+                                                    : 'text-slate-300 hover:bg-slate-700/50'
+                                            }`}
+                                        >
+                                            {category === 'all' ? 'All Datasets' : category.replace('_', ' ')}
+                                            <span className="ml-auto float-right text-xs text-slate-500">
+                                                {category === 'all' ? datasets.length : datasets.filter(d => d.domain === category).length}
+                                            </span>
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <Zap className="w-4 h-4" />
-                                Real-time previews
+
+                            {/* Access Level */}
+                            <div>
+                                <h3 className="text-white font-medium mb-3">Access Level</h3>
+                                <div className="space-y-2">
+                                    {['public', 'restricted'].map(access => (
+                                        <label key={access} className="flex items-center gap-2 text-slate-300 cursor-pointer text-sm">
+                                            <input
+                                                type="checkbox"
+                                                checked={activeFilters.access.includes(access)}
+                                                onChange={() => toggleFilter('access', access)}
+                                                className="rounded border-slate-600 bg-slate-700 text-cyan-500"
+                                            />
+                                            <span className="flex items-center gap-1">
+                                                {access === 'public' ? <Unlock className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
+                                                {access === 'public' ? 'Public' : 'Restricted'}
+                                            </span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Format Filter */}
+                            <div>
+                                <h3 className="text-white font-medium mb-3">File Format</h3>
+                                <div className="space-y-2">
+                                    {['CSV', 'JSON', 'FASTA', 'ZIP'].map(format => (
+                                        <label key={format} className="flex items-center gap-2 text-slate-300 cursor-pointer text-sm">
+                                            <input
+                                                type="checkbox"
+                                                checked={activeFilters.format.includes(format)}
+                                                onChange={() => toggleFilter('format', format)}
+                                                className="rounded border-slate-600 bg-slate-700 text-cyan-500"
+                                            />
+                                            <span className="flex items-center gap-1">
+                                                {React.createElement(getFormatIcon(format), { className: "w-3 h-3" })}
+                                                {format}
+                                            </span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <button
+                                onClick={clearAllFilters}
+                                className="w-full px-3 py-2 text-slate-400 hover:text-cyan-400 transition-colors text-sm border border-slate-700 rounded-lg hover:border-cyan-400/30"
+                            >
+                                Clear All Filters
+                            </button>
+
+                            <div className="pt-4 border-t border-slate-700">
+                                <div className="text-sm text-slate-400">
+                                    {filteredDatasets.length} of {datasets.length} datasets
+                                    {selectedDatasets.length > 0 && (
+                                        <div className="text-cyan-400 mt-1">
+                                            {selectedDatasets.length} selected
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex gap-6">
-                        {/* Enhanced Filters Sidebar */}
-                        <div className="w-80 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 h-fit sticky top-24">
-                            <div className="mb-6">
-                                <div className="relative">
-                                    <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-                                    <input
-                                        type="text"
-                                        placeholder="Search datasets..."
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-3 py-2 text-white placeholder-slate-400 focus:border-cyan-400 transition-colors"
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-6">
-                                {/* Quick Categories */}
-                                <div>
-                                    <h3 className="text-white font-medium mb-3 flex items-center gap-2">
-                                        <Layers className="w-4 h-4" />
-                                        Data Categories
-                                    </h3>
-                                    <div className="space-y-2">
-                                        {['all', 'oceanography', 'fisheries', 'molecular', 'remote_sensing', 'biodiversity', 'environmental'].map(category => {
-                                            const IconComponent = getDomainIcon(category === 'all' ? 'all' : category);
-                                            return (
-                                                <button
-                                                    key={category}
-                                                    onClick={() => setSelectedCategory(category)}
-                                                    className={`w-full text-left px-3 py-2 rounded-lg transition-colors flex items-center gap-2 ${
-                                                        selectedCategory === category
-                                                            ? 'bg-cyan-500/20 text-cyan-400'
-                                                            : 'text-slate-300 hover:bg-slate-700/50'
-                                                    }`}
-                                                >
-                                                    <IconComponent className="w-4 h-4" />
-                                                    {category === 'all' ? 'All Datasets' : category.replace('_', ' ')}
-                                                    <span className="ml-auto text-xs text-slate-500">
-                                                        {category === 'all' ? datasets.length : datasets.filter(d => d.domain === category).length}
-                                                    </span>
-                                                </button>
-                                            );
-                                        })}
-                                    </div>
+                    {/* Main Content */}
+                    <div className="flex-1">
+                        {/* Action Bar */}
+                        <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 mb-6">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <button
+                                        onClick={handleSelectAll}
+                                        className="px-4 py-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors"
+                                    >
+                                        {selectedDatasets.length === filteredDatasets.length ? 'Deselect All' : 'Select All'}
+                                    </button>
+                                    
+                                    <select 
+                                        value={sortBy}
+                                        onChange={(e) => handleSort(e.target.value)}
+                                        className="bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:border-cyan-400 transition-colors"
+                                    >
+                                        <option value="name">Sort by Name</option>
+                                        <option value="lastUpdated">Sort by Date</option>
+                                        <option value="quality">Sort by Quality</option>
+                                    </select>
                                 </div>
 
-                                {/* Access Level Filter */}
-                                <div>
-                                    <h3 className="text-white font-medium mb-3">Access Level</h3>
-                                    <div className="space-y-2">
-                                        {['public', 'restricted'].map(access => (
-                                            <label key={access} className="flex items-center gap-2 text-slate-300 cursor-pointer">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={activeFilters.access.includes(access)}
-                                                    onChange={() => toggleFilter('access', access)}
-                                                    className="rounded border-slate-600 bg-slate-700 text-cyan-500"
-                                                />
-                                                <span className="flex items-center gap-1">
-                                                    {access === 'public' ? <Unlock className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
-                                                    {access === 'public' ? 'Public Access' : 'Restricted'}
-                                                </span>
-                                            </label>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Dataset Status */}
-                               
-
-                                {/* Clear Filters */}
-                                <button
-                                    onClick={clearAllFilters}
-                                    className="w-full px-3 py-2 text-slate-400 hover:text-cyan-400 transition-colors text-sm border border-slate-700 rounded-lg hover:border-cyan-400/30"
-                                >
-                                    Clear All Filters
-                                </button>
-
-                                {/* Results Summary */}
-                                <div className="pt-4 border-t border-slate-700">
-                                    <div className="text-sm text-slate-400">
-                                        Showing {filteredDatasets.length} of {datasets.length} datasets
-                                        {selectedDatasets.length > 0 && (
-                                            <span className="text-cyan-400 ml-1">
-                                                ({selectedDatasets.length} selected)
-                                            </span>
+                                <div className="flex items-center gap-3">
+                                    <button 
+                                        onClick={downloadSelectedDatasets}
+                                        disabled={selectedDatasets.length === 0 || isGeneratingFile}
+                                        className="px-4 py-2 bg-cyan-500/20 text-cyan-300 rounded-lg hover:bg-cyan-500/30 transition-colors disabled:opacity-50 flex items-center gap-2"
+                                    >
+                                        {isGeneratingFile ? (
+                                            <Loader className="w-4 h-4 animate-spin" />
+                                        ) : (
+                                            <DownloadCloud className="w-4 h-4" />
                                         )}
-                                    </div>
+                                        Download ({selectedDatasets.length})
+                                    </button>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Main Content Area */}
-                        <div className="flex-1">
-                            {/* Action Bar */}
-                            <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 mb-6">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
-                                        <button
-                                            onClick={handleSelectAll}
-                                            className="px-4 py-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors"
-                                        >
-                                            {selectedDatasets.length === filteredDatasets.length ? 'Deselect All' : 'Select All'}
-                                        </button>
-                                        
-                                        <select 
-                                            value={sortBy}
-                                            onChange={(e) => handleSort(e.target.value)}
-                                            className="bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:border-cyan-400 transition-colors"
-                                        >
-                                            <option value="name">Sort by Name</option>
-                                            <option value="lastUpdated">Sort by Recent</option>
-                                            <option value="quality">Sort by Quality</option>
-                                            <option value="size">Sort by Size</option>
-                                        </select>
+                        {/* Dataset Grid */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                            {filteredDatasets.map(dataset => {
+                                const IconComponent = dataset.icon;
+                                const FormatIcon = getFormatIcon(dataset.format);
+                                const downloadStatus = downloadQueue[dataset.id];
+                                
+                                return (
+                                    <div key={dataset.id} className="bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 hover:border-slate-600/50 transition-all duration-300 group">
+                                        {/* Download Progress */}
+                                        {downloadStatus && (
+                                            <div className="mb-4">
+                                                <div className="flex justify-between text-xs text-slate-400 mb-1">
+                                                    <span className="capitalize">{downloadStatus.status}</span>
+                                                    <span>{Math.round(downloadStatus.progress)}%</span>
+                                                </div>
+                                                <div className="w-full bg-slate-700 rounded-full h-2">
+                                                    <div 
+                                                        className="bg-cyan-500 h-2 rounded-full transition-all duration-300"
+                                                        style={{ width: `${downloadStatus.progress}%` }}
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                        )}
 
-                                        <div className="flex items-center gap-2 text-slate-400 text-sm">
-                                            <span>Sort:</span>
+                                        <div className="flex items-start justify-between mb-4">
+                                            <div className={`p-3 rounded-xl ${getBgColor(dataset.color)}`}>
+                                                <IconComponent className={`w-6 h-6 ${getIconColor(dataset.color)}`} />
+                                            </div>
+                                            <div className="flex items-center gap-2">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedDatasets.includes(dataset.id)}
+                                                    onChange={() => handleDatasetSelect(dataset.id)}
+                                                    className="rounded border-slate-600 bg-slate-700 text-cyan-500"
+                                                />
+                                                {dataset.access === 'restricted' && (
+                                                    <Lock className="w-4 h-4 text-amber-400" />
+                                                )}
+                                                <FormatIcon className="w-4 h-4 text-slate-400" />
+                                                {downloadStatus?.status === 'complete' && (
+                                                    <CheckCircle className="w-4 h-4 text-emerald-400" />
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <h3 className="text-white font-semibold mb-2 line-clamp-2 group-hover:text-cyan-300 transition-colors">{dataset.name}</h3>
+                                        <p className="text-slate-400 text-sm mb-3 line-clamp-2">{dataset.description}</p>
+
+                                        {/* Tags */}
+                                        <div className="flex flex-wrap gap-1 mb-4">
+                                            {dataset.tags.slice(0, 3).map((tag, index) => (
+                                                <span key={index} className="px-2 py-1 bg-slate-700/50 text-slate-300 rounded text-xs">
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                            {dataset.tags.length > 3 && (
+                                                <span className="px-2 py-1 bg-slate-700/50 text-slate-400 rounded text-xs">
+                                                    +{dataset.tags.length - 3}
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <div className="space-y-2 mb-4">
+                                            <div className="flex items-center justify-between text-sm">
+                                                <span className="text-slate-500">Format:</span>
+                                                <span className="text-slate-300 flex items-center gap-1">
+                                                    <FormatIcon className="w-3 h-3" />
+                                                    {dataset.format}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center justify-between text-sm">
+                                                <span className="text-slate-500">Size:</span>
+                                                <span className="text-slate-300">{dataset.size}</span>
+                                            </div>
+                                            <div className="flex items-center justify-between text-sm">
+                                                <span className="text-slate-500">Quality:</span>
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-12 bg-slate-700 rounded-full h-1.5">
+                                                        <div 
+                                                            className="bg-emerald-500 h-1.5 rounded-full transition-all duration-300"
+                                                            style={{ width: `${dataset.quality}%` }}
+                                                        ></div>
+                                                    </div>
+                                                    <span className="text-slate-300 text-xs">{dataset.quality}%</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex items-center justify-between text-sm">
+                                                <span className="text-slate-500">Updated:</span>
+                                                <span className="text-slate-300 text-xs">{new Date(dataset.lastUpdated).toLocaleDateString()}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex items-center gap-2 pt-4 border-t border-slate-700">
                                             <button
-                                                onClick={() => handleSort(sortBy)}
-                                                className="p-1 hover:text-cyan-400 transition-colors"
+                                                onClick={() => setPreviewDataset(dataset)}
+                                                className="flex-1 flex items-center justify-center gap-2 px-3 py-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors text-sm"
                                             >
-                                                {sortDirection === 'asc' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                                                <Eye className="w-4 h-4" />
+                                                Preview
+                                            </button>
+                                            <button
+                                                onClick={() => downloadFile(dataset)}
+                                                disabled={isGeneratingFile || downloadStatus}
+                                                className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm ${
+                                                    dataset.access === 'restricted' 
+                                                        ? 'bg-amber-500/20 text-amber-300 hover:bg-amber-500/30' 
+                                                        : 'bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30'
+                                                } disabled:opacity-50`}
+                                            >
+                                                {downloadStatus ? (
+                                                    <Loader className="w-4 h-4 animate-spin" />
+                                                ) : (
+                                                    <Download className="w-4 h-4" />
+                                                )}
+                                                {dataset.access === 'restricted' ? 'Request' : 'Download'}
                                             </button>
                                         </div>
                                     </div>
-
-                                    <div className="flex items-center gap-3">
-                                        <button 
-                                            onClick={() => handleDownload()}
-                                            disabled={selectedDatasets.length === 0 || isLoading}
-                                            className="px-4 py-2 bg-cyan-500/20 text-cyan-300 rounded-lg hover:bg-cyan-500/30 transition-colors disabled:opacity-50 flex items-center gap-2"
-                                        >
-                                            {isLoading ? (
-                                                <RefreshCw className="w-4 h-4 animate-spin" />
-                                            ) : (
-                                                <DownloadCloud className="w-4 h-4" />
-                                            )}
-                                            Download Selected ({selectedDatasets.length})
-                                        </button>
-                                        
-                                        <button 
-                                            onClick={() => addNotification('Settings panel opened', 'info')}
-                                            className="p-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors"
-                                        >
-                                            <Settings className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Dataset Grid */}
-                            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                                {filteredDatasets.map(dataset => {
-                                    const IconComponent = dataset.icon;
-                                    const progress = downloadProgress[dataset.id] || 0;
-                                    
-                                    return (
-                                        <div key={dataset.id} className="bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 hover:border-slate-600/50 transition-all duration-300 hover:transform hover:scale-105 group">
-                                            {/* Download Progress Bar */}
-                                            {progress > 0 && progress < 100 && (
-                                                <div className="mb-4">
-                                                    <div className="flex justify-between text-xs text-slate-400 mb-1">
-                                                        <span>Downloading...</span>
-                                                        <span>{Math.round(progress)}%</span>
-                                                    </div>
-                                                    <div className="w-full bg-slate-700 rounded-full h-2">
-                                                        <div 
-                                                            className="bg-cyan-500 h-2 rounded-full transition-all duration-300"
-                                                            style={{ width: `${progress}%` }}
-                                                        ></div>
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            <div className="flex items-start justify-between mb-4">
-                                                <div className={`p-3 rounded-xl ${getBgColor(dataset.color)}`}>
-                                                    <IconComponent className={`w-6 h-6 ${getIconColor(dataset.color)}`} />
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={selectedDatasets.includes(dataset.id)}
-                                                        onChange={() => handleDatasetSelect(dataset.id)}
-                                                        className="rounded border-slate-600 bg-slate-700 text-cyan-500"
-                                                    />
-                                                    {dataset.access === 'restricted' && (
-                                                        <Lock className="w-4 h-4 text-amber-400" />
-                                                    )}
-                                                    {progress === 100 && (
-                                                        <CheckCircle className="w-4 h-4 text-emerald-400" />
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            <h3 className="text-white font-semibold mb-2 line-clamp-2 group-hover:text-cyan-300 transition-colors">{dataset.name}</h3>
-                                            <p className="text-slate-400 text-sm mb-4 line-clamp-2">{dataset.description}</p>
-
-                                            {/* Tags */}
-                                            <div className="flex flex-wrap gap-1 mb-4">
-                                                {dataset.tags.map((tag, index) => (
-                                                    <span key={index} className="px-2 py-1 bg-slate-700/50 text-slate-300 rounded-md text-xs">
-                                                        {tag}
-                                                    </span>
-                                                ))}
-                                            </div>
-
-                                            <div className="space-y-3 mb-4">
-                                                <div className="flex items-center justify-between text-sm">
-                                                    <span className="text-slate-500">Format:</span>
-                                                    <span className="text-slate-300">{dataset.format}</span>
-                                                </div>
-                                                <div className="flex items-center justify-between text-sm">
-                                                    <span className="text-slate-500">Size:</span>
-                                                    <span className="text-slate-300">{dataset.size}</span>
-                                                </div>
-                                                <div className="flex items-center justify-between text-sm">
-                                                    <span className="text-slate-500">Time Range:</span>
-                                                    <span className="text-slate-300">{dataset.timeRange}</span>
-                                                </div>
-                                                <div className="flex items-center justify-between text-sm">
-                                                    <span className="text-slate-500">Quality:</span>
-                                                    <div className="flex items-center gap-2">
-                                                        <div className="w-16 bg-slate-700 rounded-full h-1.5">
-                                                            <div 
-                                                                className="bg-emerald-500 h-1.5 rounded-full"
-                                                                style={{ width: `${dataset.quality}%` }}
-                                                            ></div>
-                                                        </div>
-                                                        <span className="text-slate-300">{dataset.quality}%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex items-center justify-between pt-4 border-t border-slate-700">
-                                                <button
-                                                    onClick={() => handlePreview(dataset)}
-                                                    className="flex items-center gap-2 px-3 py-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors text-sm"
-                                                >
-                                                    <Eye className="w-4 h-4" />
-                                                    Preview
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDownload(dataset)}
-                                                    disabled={dataset.access === 'restricted' || isLoading}
-                                                    className="flex items-center gap-2 px-3 py-2 bg-cyan-500/20 text-cyan-300 rounded-lg hover:bg-cyan-500/30 transition-colors disabled:opacity-50 text-sm"
-                                                >
-                                                    <Download className="w-4 h-4" />
-                                                    {dataset.access === 'restricted' ? 'Request Access' : 'Download'}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-
-                            {filteredDatasets.length === 0 && (
-                                <div className="text-center py-12">
-                                    <Database className="w-12 h-12 text-slate-600 mx-auto mb-4" />
-                                    <p className="text-slate-400">No datasets found matching your criteria.</p>
-                                    <button 
-                                        onClick={clearAllFilters}
-                                        className="mt-2 text-cyan-400 hover:text-cyan-300 transition-colors"
-                                    >
-                                        Clear all filters
-                                    </button>
-                                </div>
-                            )}
+                                );
+                            })}
                         </div>
+
+                        {filteredDatasets.length === 0 && (
+                            <div className="text-center py-12">
+                                <Database className="w-12 h-12 text-slate-600 mx-auto mb-4" />
+                                <h3 className="text-xl font-semibold text-white mb-2">No datasets found</h3>
+                                <p className="text-slate-400 mb-4">Try adjusting your search criteria or filters.</p>
+                                <button 
+                                    onClick={clearAllFilters}
+                                    className="px-4 py-2 bg-cyan-500/20 text-cyan-300 rounded-lg hover:bg-cyan-500/30 transition-colors"
+                                >
+                                    Clear all filters
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -2169,7 +3173,8 @@ export default function DataHub() {
             {/* Dataset Preview Modal */}
             {previewDataset && (
                 <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4" onClick={() => setPreviewDataset(null)}>
-                    <div className="bg-slate-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-slate-700" onClick={(e) => e.stopPropagation()}>
+                    <div className="bg-slate-800 rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto border border-slate-700" onClick={(e) => e.stopPropagation()}>
+                        {/* Modal Header */}
                         <div className="flex items-center justify-between p-6 border-b border-slate-700 sticky top-0 bg-slate-800">
                             <div className="flex items-center gap-3">
                                 <div className={`p-2 rounded-lg ${getBgColor(previewDataset.color)}`}>
@@ -2177,7 +3182,20 @@ export default function DataHub() {
                                 </div>
                                 <div>
                                     <h3 className="text-white font-semibold text-lg">{previewDataset.name}</h3>
-                                    <p className="text-slate-400 text-sm">{previewDataset.type} • {previewDataset.domain.replace('_', ' ')}</p>
+                                    <div className="flex items-center gap-2 text-slate-400 text-sm">
+                                        <span>{previewDataset.type}</span>
+                                        <span>•</span>
+                                        <span>{previewDataset.format}</span>
+                                        <span>•</span>
+                                        <span>{previewDataset.size}</span>
+                                        {previewDataset.access === 'restricted' && (
+                                            <>
+                                                <span>•</span>
+                                                <Lock className="w-3 h-3 text-amber-400" />
+                                                <span className="text-amber-400">Restricted</span>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <button 
@@ -2189,63 +3207,111 @@ export default function DataHub() {
                         </div>
                         
                         <div className="p-6">
+                            {/* Dataset Overview */}
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-                                <div>
-                                    <h4 className="text-white font-medium mb-3">Dataset Overview</h4>
-                                    <div className="space-y-3">
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-400">Description:</span>
-                                            <span className="text-slate-300 text-right">{previewDataset.description}</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-400">Institution:</span>
-                                            <span className="text-slate-300">{previewDataset.institution}</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-400">License:</span>
-                                            <span className="text-slate-300">{previewDataset.license}</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-400">Last Updated:</span>
-                                            <span className="text-slate-300">{previewDataset.lastUpdated}</span>
-                                        </div>
+                                <div className="space-y-4">
+                                    <div>
+                                        <h4 className="text-white font-medium mb-2 flex items-center gap-2">
+                                            <Info className="w-4 h-4" />
+                                            Overview
+                                        </h4>
+                                        <p className="text-slate-300 text-sm leading-relaxed">{previewDataset.description}</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 className="text-white font-medium mb-2">Institution</h4>
+                                        <p className="text-slate-300 text-sm">{previewDataset.institution}</p>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 className="text-white font-medium mb-2">License</h4>
+                                        <p className="text-slate-300 text-sm">{previewDataset.license}</p>
                                     </div>
                                 </div>
                                 
-                                <div>
-                                    <h4 className="text-white font-medium mb-3">Technical Details</h4>
-                                    <div className="space-y-3">
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-400">Sample Size:</span>
-                                            <span className="text-slate-300">{previewDataset.sampleSize}</span>
+                                <div className="space-y-4">
+                                    <div>
+                                        <h4 className="text-white font-medium mb-2 flex items-center gap-2">
+                                            <Calendar className="w-4 h-4" />
+                                            Temporal Coverage
+                                        </h4>
+                                        <div className="space-y-2 text-sm">
+                                            <div className="flex justify-between">
+                                                <span className="text-slate-400">Time Range:</span>
+                                                <span className="text-slate-300">{previewDataset.timeRange}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-slate-400">Frequency:</span>
+                                                <span className="text-slate-300">{previewDataset.frequency}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-slate-400">Last Updated:</span>
+                                                <span className="text-slate-300">{new Date(previewDataset.lastUpdated).toLocaleDateString()}</span>
+                                            </div>
                                         </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-400">Frequency:</span>
-                                            <span className="text-slate-300">{previewDataset.frequency}</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-400">Data Quality:</span>
-                                            <span className="text-slate-300">{previewDataset.quality}%</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-slate-400">API Endpoint:</span>
-                                            <span className="text-slate-300 font-mono text-sm">{previewDataset.apiEndpoint}</span>
+                                    </div>
+                                    
+                                    <div>
+                                        <h4 className="text-white font-medium mb-2 flex items-center gap-2">
+                                            <BarChart3 className="w-4 h-4" />
+                                            Data Metrics
+                                        </h4>
+                                        <div className="space-y-2 text-sm">
+                                            <div className="flex justify-between">
+                                                <span className="text-slate-400">Sample Size:</span>
+                                                <span className="text-slate-300">{previewDataset.sampleSize}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-slate-400">Quality Score:</span>
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-16 bg-slate-700 rounded-full h-1.5">
+                                                        <div 
+                                                            className="bg-emerald-500 h-1.5 rounded-full"
+                                                            style={{ width: `${previewDataset.quality}%` }}
+                                                        ></div>
+                                                    </div>
+                                                    <span className="text-slate-300">{previewDataset.quality}%</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-slate-400">Location:</span>
+                                                <span className="text-slate-300">{previewDataset.location}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             
+                            {/* Variables */}
+                            <div className="mb-6">
+                                <h4 className="text-white font-medium mb-3 flex items-center gap-2">
+                                    <Code className="w-4 h-4" />
+                                    Variables & Parameters
+                                </h4>
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                                    {previewDataset.variables.map((variable, index) => (
+                                        <div key={index} className="px-3 py-2 bg-slate-700/50 text-slate-300 rounded-lg text-sm font-mono">
+                                            {variable}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            
                             {/* Sample Data Preview */}
                             <div className="mb-6">
-                                <h4 className="text-white font-medium mb-3">Sample Data Preview</h4>
-                                <div className="bg-slate-900/50 rounded-lg p-4">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                        {previewDataset.sampleData.slice(0, 3).map((sample, index) => (
-                                            <div key={index} className="bg-slate-800/30 rounded-lg p-3">
+                                <h4 className="text-white font-medium mb-3 flex items-center gap-2">
+                                    <Eye className="w-4 h-4" />
+                                    Sample Data Preview
+                                </h4>
+                                <div className="bg-slate-900/50 rounded-lg p-4 overflow-x-auto">
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
+                                        {previewDataset.sampleData.map((sample, index) => (
+                                            <div key={index} className="bg-slate-800/50 rounded-lg p-3 border border-slate-700/50">
+                                                <div className="text-xs text-slate-400 mb-2">Record {index + 1}</div>
                                                 {Object.entries(sample).map(([key, value]) => (
                                                     <div key={key} className="flex justify-between text-sm mb-1">
-                                                        <span className="text-slate-400 capitalize">{key}:</span>
-                                                        <span className="text-slate-300">{value}</span>
+                                                        <span className="text-slate-400 font-mono">{key}:</span>
+                                                        <span className="text-slate-300 font-mono">{value}</span>
                                                     </div>
                                                 ))}
                                             </div>
@@ -2254,32 +3320,48 @@ export default function DataHub() {
                                 </div>
                             </div>
                             
+                            {/* Tags */}
                             <div className="mb-6">
-                                <h4 className="text-white font-medium mb-3">Variables & Parameters</h4>
+                                <h4 className="text-white font-medium mb-3">Tags</h4>
                                 <div className="flex flex-wrap gap-2">
-                                    {previewDataset.variables.map((variable, index) => (
+                                    {previewDataset.tags.map((tag, index) => (
                                         <span key={index} className="px-3 py-1 bg-slate-700/50 text-slate-300 rounded-full text-sm">
-                                            {variable}
+                                            #{tag}
                                         </span>
                                     ))}
                                 </div>
                             </div>
                             
+                            {/* Action Buttons */}
                             <div className="flex gap-3">
                                 <button
-                                    onClick={() => handleDownload(previewDataset)}
-                                    disabled={previewDataset.access === 'restricted' || isLoading}
-                                    className="flex-1 px-4 py-3 bg-cyan-500/20 text-cyan-300 rounded-lg hover:bg-cyan-500/30 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+                                    onClick={() => downloadFile(previewDataset)}
+                                    disabled={isGeneratingFile}
+                                    className={`flex-1 px-4 py-3 rounded-lg transition-colors flex items-center justify-center gap-2 ${
+                                        previewDataset.access === 'restricted'
+                                            ? 'bg-amber-500/20 text-amber-300 hover:bg-amber-500/30'
+                                            : 'bg-cyan-500/20 text-cyan-300 hover:bg-cyan-500/30'
+                                    } disabled:opacity-50`}
                                 >
-                                    <Download className="w-5 h-5" />
+                                    {isGeneratingFile ? (
+                                        <Loader className="w-5 h-5 animate-spin" />
+                                    ) : (
+                                        <Download className="w-5 h-5" />
+                                    )}
                                     {previewDataset.access === 'restricted' ? 'Request Access' : 'Download Dataset'}
                                 </button>
                                 <button 
-                                    onClick={() => addNotification('API documentation opened', 'info')}
+                                    onClick={() => addNotification('API documentation accessed', 'info')}
                                     className="px-4 py-3 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors flex items-center gap-2"
                                 >
                                     <ExternalLink className="w-5 h-5" />
-                                    API Documentation
+                                    API Docs
+                                </button>
+                                <button 
+                                    onClick={() => addNotification('Dataset shared successfully', 'success')}
+                                    className="px-4 py-3 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors"
+                                >
+                                    Share
                                 </button>
                             </div>
                         </div>
