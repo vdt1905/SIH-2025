@@ -16,7 +16,7 @@ import VarunAIAgent from '../components/VarunAIAgent';
 export default function OceanographicPortal() {
     const [isVarunOpen, setIsVarunOpen] = useState(false);
     const [selectedParameter, setSelectedParameter] = useState('Temperature');
-    const [selectedRegion, setSelectedRegion] = useState('Arabian Sea');
+    const [selectedRegion, setSelectedRegion] = useState('All Regions');
     const [timeFilter, setTimeFilter] = useState('Last 7 Days');
     const [depthFilter, setDepthFilter] = useState('Surface');
     const [selectedStations, setSelectedStations] = useState([]);
@@ -836,6 +836,13 @@ export default function OceanographicPortal() {
                                     </h3>
                                     <div ref={temperatureChartRef} className="w-full"></div>
                                 </div>
+                                <div className="col-span-4 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-4">
+                                    <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                                        <BarChart3 className="w-5 h-5 text-purple-400 " />
+                                        Water Masses
+                                    </h3>
+                                    <div ref={profileChartRef} className="w-full "></div>
+                                </div>
 
                                 {/* Salinity Profile */}
                                 
@@ -844,22 +851,10 @@ export default function OceanographicPortal() {
                             {/* Current Analysis & Water Mass */}
                             <div className="grid grid-cols-12 gap-6 mb-6">
                                 {/* Ocean Current Map */}
-                                <div className="col-span-8 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-4">
-                                    <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                        <Navigation className="w-5 h-5 text-cyan-400" />
-                                        Ocean Current Analysis
-                                    </h3>
-                                    <div ref={currentMapRef} className="w-full"></div>
-                                </div>
+                                
 
                                 {/* Water Mass Analysis */}
-                                <div className="col-span-4 bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-4">
-                                    <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                                        <BarChart3 className="w-5 h-5 text-purple-400" />
-                                        Water Masses
-                                    </h3>
-                                    <div ref={profileChartRef} className="w-full"></div>
-                                </div>
+                                
                             </div>
 
                             {/* Environmental Parameters */}

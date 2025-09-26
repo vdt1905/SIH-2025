@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Database, Waves, Fish, Dna, Globe, Bell, User, Menu, X } from 'lucide-react';
+import { Search, Database, Waves, Fish, Dna, Globe, Bell, User, Menu, X,BotIcon } from 'lucide-react';
 import logo from "../assets/DOMinators.jpg";
 import { useNavigate } from 'react-router-dom'
 
@@ -58,6 +58,7 @@ export default function Navbar() {
                         <NavLink icon={Fish} href="/fisheries" label="Fisheries" />
                         <NavLink icon={Dna} href="/edna" label="eDNA Portal" />
                         <NavLink icon={Globe} href="/marine" label="Digital Twin" />
+                        <NavLink icon={BotIcon} href="/analytics" label="AI Assistant" />
                     </div>
 
                     {/* Right Section */}
