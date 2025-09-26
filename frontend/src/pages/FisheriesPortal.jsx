@@ -309,7 +309,7 @@ export default function FisheriesPortal() {
         },
         { 
             species: 'Oil Sardine', 
-            currentStock: 90, 
+            currentStock: 95, 
             optimalStock: 100, 
             trend: 'stable', 
             msy: 2500,
@@ -584,26 +584,10 @@ export default function FisheriesPortal() {
                                         <h1 className="text-2xl font-bold text-white">Fisheries Intelligence Portal</h1>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <div className="flex items-center gap-2 bg-slate-700/50 px-3 py-2 rounded-lg">
-                                            <Bell className="w-4 h-4 text-yellow-400" />
-                                            <span className="text-white text-sm">{alertCount} alerts</span>
-                                        </div>
-                                        <button 
-                                            onClick={() => setIsTracking(!isTracking)}
-                                            className={`px-3 py-2 rounded-lg text-sm transition-colors ${
-                                                isTracking 
-                                                    ? 'bg-green-500/20 text-green-300 hover:bg-green-500/30' 
-                                                    : 'bg-gray-500/20 text-gray-300 hover:bg-gray-500/30'
-                                            }`}
-                                        >
-                                            {isTracking ? 'Live Tracking' : 'Paused'}
-                                        </button>
-                                        <button 
-                                            onClick={() => {setShowModal(true); setModalType('settings');}}
-                                            className="p-2 bg-slate-700/50 text-slate-300 rounded-lg hover:bg-slate-600/50 transition-colors"
-                                        >
-                                            <Settings className="w-4 h-4" />
-                                        </button>
+                                        
+                                        
+                                       
+                                        
                                     </div>
                                 </div>
                                 <p className="text-slate-300">Integrated fisheries management and marine living resources assessment platform</p>
@@ -615,79 +599,7 @@ export default function FisheriesPortal() {
                             </div>
 
                             {/* Enhanced Control Panel */}
-                            <div className="bg-slate-800/50 rounded-2xl border border-slate-700/50 backdrop-blur-sm p-6 mb-6">
-                                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-                                    <div>
-                                        <label className="text-slate-300 text-sm font-medium mb-2 block">Analysis Type</label>
-                                        <select 
-                                            value={selectedAnalysis}
-                                            onChange={(e) => setSelectedAnalysis(e.target.value)}
-                                            className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:border-orange-400 transition-colors"
-                                        >
-                                            <option>Stock Assessment</option>
-                                            <option>Vessel Tracking</option>
-                                            <option>Catch Analysis</option>
-                                            <option>Quota Management</option>
-                                            <option>Compliance Monitoring</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-slate-300 text-sm font-medium mb-2 block">Region</label>
-                                        <select 
-                                            value={selectedRegion}
-                                            onChange={(e) => setSelectedRegion(e.target.value)}
-                                            className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:border-orange-400 transition-colors"
-                                        >
-                                            <option>Arabian Sea</option>
-                                            <option>Bay of Bengal</option>
-                                            <option>Lakshadweep Sea</option>
-                                            <option>Andaman Sea</option>
-                                            <option>All Regions</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-slate-300 text-sm font-medium mb-2 block">Time Period</label>
-                                        <select 
-                                            value={timeFilter}
-                                            onChange={(e) => setTimeFilter(e.target.value)}
-                                            className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:border-orange-400 transition-colors"
-                                        >
-                                            <option>Last 24 Hours</option>
-                                            <option>Last 7 Days</option>
-                                            <option>Last 30 Days</option>
-                                            <option>Last Quarter</option>
-                                            <option>Custom Range</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-slate-300 text-sm font-medium mb-2 block">Vessel Filter</label>
-                                        <select 
-                                            value={vesselFilter}
-                                            onChange={(e) => setVesselFilter(e.target.value)}
-                                            className="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-3 py-2 text-white focus:border-orange-400 transition-colors"
-                                        >
-                                            <option>All Vessels</option>
-                                            <option>Active</option>
-                                            <option>Returning</option>
-                                            <option>Anchored</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label className="text-slate-300 text-sm font-medium mb-2 block">Search</label>
-                                        <div className="relative">
-                                            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-                                            <input
-                                                type="text"
-                                                placeholder="Search vessels, species..."
-                                                value={searchTerm}
-                                                onChange={(e) => setSearchTerm(e.target.value)}
-                                                className="w-full bg-slate-700/50 border border-slate-600 rounded-lg pl-10 pr-3 py-2 text-white placeholder-slate-400 focus:border-orange-400 transition-colors"
-                                            />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                            
                             {/* Main Dashboard Grid */}
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
                                 {/* Stock Assessment Chart */}
