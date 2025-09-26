@@ -2300,6 +2300,7 @@ import {
     Navigation, Wind, Cloud, AlertCircle, CheckCircle, X, FileJson,
     FileSpreadsheet, Archive, Image, Code, Loader
 } from 'lucide-react';
+import Navbar from '../components/Navbar';
 
 export default function DataHub() {
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -2817,7 +2818,8 @@ export default function DataHub() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
+        <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-40">
+            <Navbar/>
             {/* Notifications */}
             <div className="fixed top-4 right-4 z-50 space-y-2 max-w-sm">
                 {notifications.map(notification => (
