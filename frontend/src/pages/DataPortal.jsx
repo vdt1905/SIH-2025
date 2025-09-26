@@ -2301,6 +2301,7 @@ import {
     FileSpreadsheet, Archive, Image, Code, Loader
 } from 'lucide-react';
 import Navbar from '../components/Navbar';
+import VarunAIAgent from '../components/VarunAIAgent';
 
 export default function DataHub() {
     const [selectedCategory, setSelectedCategory] = useState('all');
@@ -2309,6 +2310,7 @@ export default function DataHub() {
     const [sortBy, setSortBy] = useState('name');
     const [sortDirection, setSortDirection] = useState('asc');
     const [previewDataset, setPreviewDataset] = useState(null);
+    const [isVarunOpen, setIsVarunOpen] = useState(false);
     const [activeFilters, setActiveFilters] = useState({
         domain: [],
         access: [],
@@ -2820,6 +2822,11 @@ export default function DataHub() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-40">
             <Navbar/>
+            <VarunAIAgent 
+                isOpen={isVarunOpen} 
+                onToggle={() => setIsVarunOpen(!isVarunOpen)}
+                currentPage="edna" // or "oceanography", "edna", "digital_twin", etc.
+            />
             {/* Notifications */}
             <div className="fixed top-4 right-4 z-50 space-y-2 max-w-sm">
                 {notifications.map(notification => (

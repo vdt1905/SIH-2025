@@ -625,7 +625,7 @@ export default function OceanographicPortal() {
                                 <div className="mt-4 bg-slate-700 rounded-full h-2">
                                     <div className="bg-gradient-to-r from-blue-400 to-cyan-500 h-2 rounded-full" style={{ width: '92%' }}></div>
                                 </div>
-                                <div className="text-xs text-slate-400 mt-1">Team DOMInators • SIH 2024 • {filteredStations.length} stations active</div>
+                                <div className="text-xs text-slate-400 mt-1">Team DOMInators • SIH 2025 • {filteredStations.length} stations active</div>
                             </div>
 
                             {/* Analysis Controls */}
