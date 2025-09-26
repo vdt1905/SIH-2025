@@ -309,7 +309,7 @@ export default function FisheriesPortal() {
         },
         { 
             species: 'Oil Sardine', 
-            currentStock: 120, 
+            currentStock: 90, 
             optimalStock: 100, 
             trend: 'stable', 
             msy: 2500,
